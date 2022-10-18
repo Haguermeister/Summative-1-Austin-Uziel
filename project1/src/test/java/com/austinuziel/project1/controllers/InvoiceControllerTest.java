@@ -63,6 +63,7 @@ public class InvoiceControllerTest {
 
     }
 
+//    POST ENDPOINTS
     @Test
     public void shouldReturnANewInvoiceInPostRequest() throws Exception {
 
@@ -85,6 +86,19 @@ public class InvoiceControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated());
     }
+
+//    PUT ENDPOINTS
+    @Test
+    public void shouldGet204HttpResponseOnPut() throws Exception {
+
+        // Arrange and Act
+        mockMvc.perform(put("/invoice")       // Act
+                        .content(inputJson)                     // Act
+                        .contentType(MediaType.APPLICATION_JSON)    // Act
+                ).andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
 
 
 
