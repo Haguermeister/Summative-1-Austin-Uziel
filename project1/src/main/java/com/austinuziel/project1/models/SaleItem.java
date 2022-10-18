@@ -9,15 +9,13 @@ abstract class SaleItem {
 
     private double price;
     private Integer quantity;
-    private String description;
 
     public SaleItem() {
     }
 
-    public SaleItem(double price, Integer quantity, String description) {
+    public SaleItem(double price, Integer quantity) {
         this.price = price;
         this.quantity = quantity;
-        this.description = description;
     }
 
     public double getPrice() {
@@ -36,25 +34,17 @@ abstract class SaleItem {
         this.quantity = quantity;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SaleItem saleItem = (SaleItem) o;
-        return Double.compare(saleItem.price, price) == 0 && Objects.equals(quantity, saleItem.quantity) && Objects.equals(description, saleItem.description);
+        return Double.compare(saleItem.price, price) == 0 && Objects.equals(quantity, saleItem.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(price, quantity, description);
+        return Objects.hash(price, quantity);
     }
 
     @Override
@@ -62,7 +52,6 @@ abstract class SaleItem {
         return "SaleItem{" +
                 "price=" + price +
                 ", quantity=" + quantity +
-                ", description='" + description + '\'' +
                 '}';
     }
 }

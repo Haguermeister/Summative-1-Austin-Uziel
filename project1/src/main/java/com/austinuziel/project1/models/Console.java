@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "console")
-public class GameConsole extends SaleItem{
+public class Console extends SaleItem{
     @Id
     @Column(name = "console_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,11 +22,11 @@ public class GameConsole extends SaleItem{
     private String model;
     private String manufacturer;
 
-    public GameConsole() {
+    public Console() {
     }
 
-    public GameConsole(double price, Integer quantity, String description, Integer consoleId, String memoryAmount, String processor, String model, String manufacturer) {
-        super(price, quantity, description);
+    public Console(double price, Integer quantity, Integer consoleId, String memoryAmount, String processor, String model, String manufacturer) {
+        super(price, quantity);
         this.consoleId = consoleId;
         this.memoryAmount = memoryAmount;
         this.processor = processor;
@@ -79,7 +79,7 @@ public class GameConsole extends SaleItem{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        GameConsole that = (GameConsole) o;
+        Console that = (Console) o;
         return Objects.equals(consoleId, that.consoleId) && Objects.equals(memoryAmount, that.memoryAmount) && Objects.equals(processor, that.processor) && Objects.equals(model, that.model) && Objects.equals(manufacturer, that.manufacturer);
     }
 
