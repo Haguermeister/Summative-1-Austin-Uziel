@@ -1,5 +1,6 @@
 package com.austinuziel.project1.controllers;
 
+import com.austinuziel.project1.models.Game;
 import com.austinuziel.project1.models.Invoice;
 import com.austinuziel.project1.repositories.InvoiceRepo;
 import com.austinuziel.project1.services.InvoiceService;
@@ -15,14 +16,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.doReturn;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @RunWith(SpringRunner.class)
@@ -40,9 +42,12 @@ public class InvoiceControllerTest {
 
     private Invoice inputInvoice;
     private Invoice outputInvoice;
+    private Invoice outputInvoice2;
 
     String inputJson;
     String outputJson;
+    String outputJson2;
+    String allInvoicesJSONFormat;
 
     @Before
     public void setUp() throws Exception {
@@ -55,15 +60,25 @@ public class InvoiceControllerTest {
                 1, "Uziel", "123 ST MAIN", "Dallas", "TX", 12345, "Game Console", 1,
                 4, 5.99F, 23.96F, 6.9F, 5.99F, 3682L
         );
+        outputInvoice2 = new Invoice(
+                2, "John", "123 ST MAIN", "Dallas", "MT", 12345, "Game", 2,
+                7, 5.99F, 23.96F, 6.9F, 5.99F, 2121L
+        );
 
         inputJson = mapper.writeValueAsString(inputInvoice);
         outputJson = mapper.writeValueAsString(outputInvoice);
+        outputJson2 = mapper.writeValueAsString(outputInvoice2);
+
+        List<Invoice> allInvoices = new ArrayList<>(Arrays.asList(outputInvoice,outputInvoice2));
+        allInvoicesJSONFormat = mapper.writeValueAsString(allInvoices);
 
         doReturn(outputInvoice).when(invoiceService).createNewInvoice(inputInvoice);
+        doReturn(allInvoices).when(invoiceService).getAllInvoices();
+
 
     }
 
-//    POST ENDPOINTS
+    //    POST ENDPOINTS
     @Test
     public void shouldReturnANewInvoiceInPostRequest() throws Exception {
 
@@ -87,7 +102,7 @@ public class InvoiceControllerTest {
                 .andExpect(status().isCreated());
     }
 
-//    PUT ENDPOINTS
+    //    PUT ENDPOINTS
     @Test
     public void shouldGet204HttpResponseOnPut() throws Exception {
 
@@ -99,7 +114,50 @@ public class InvoiceControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    //    GET ENDPOINTS
+    @Test
+    public void shouldReturnAllInvoicesInCollection() throws Exception {
+        mockMvc.perform(get("/invoice"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0]").isNotEmpty());
+    }
 
+    @Test
+    public void shouldReturnA200StatusCodeWhenGettingAllInvoices() throws Exception {
+        mockMvc.perform(get("/invoice"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldReturnOneInvoiceById() throws Exception {
+        mockMvc.perform(get("/invoice"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0]").isNotEmpty());
+    }
+
+    @Test
+    public void shouldReturn200StatusCodeWhenGettingAnInvoiceById() throws Exception {
+
+        doReturn(Optional.of(outputInvoice)).when(invoiceService).getInvoiceById(1);
+        mockMvc.perform(get("/invoice", 1))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+    @Test
+    public void shouldReturnEmptyResponseWhenInvoiceNotFound() throws Exception {
+
+        doReturn(Optional.empty()).when(invoiceService).getInvoiceById(100);
+        mockMvc.perform(get("/invoice/100"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0]").doesNotExist())
+        ;
+    }
+
+//    DELETE ENDPOINTS
 
 
 

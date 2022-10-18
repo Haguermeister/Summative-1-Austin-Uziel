@@ -47,9 +47,9 @@ public class InvoiceController {
     }
 
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Invoice> getInvoiceById(@RequestParam Integer id) {
+    public Optional<Invoice> getInvoiceById(@PathVariable Integer id) {
         return invoiceService.getInvoiceById(id);
     }
 
