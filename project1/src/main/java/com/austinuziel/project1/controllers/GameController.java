@@ -14,7 +14,7 @@ import java.util.List;
 public class GameController {
     @Autowired
     GameRepo repo;
-    
+
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<Game> getGames() {return new ArrayList<>();}
