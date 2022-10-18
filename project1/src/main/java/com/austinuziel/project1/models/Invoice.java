@@ -1,4 +1,4 @@
-package com.austinuziel.project1.viewModel;
+package com.austinuziel.project1.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "invoice")
-public class InvoiceModel {
+public class Invoice {
 
     //    FIELDS
     @Id
@@ -47,10 +47,10 @@ public class InvoiceModel {
     private Long total;
 
     //    CONSTRUCTORS
-    public InvoiceModel() {
+    public Invoice() {
     }
 
-    public InvoiceModel(Integer id, String name, String street, String city, String state, int zipCode, String itemType, int itemId, int quantity, float unit_price, float subtotal, float tax, float processingFee, Long total) {
+    public Invoice(Integer id, String name, String street, String city, String state, int zipCode, String itemType, int itemId, int quantity, float unit_price, float subtotal, float tax, float processingFee, Long total) {
         this.id = id;
         this.name = name;
         this.street = street;
@@ -185,7 +185,7 @@ public class InvoiceModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        InvoiceModel that = (InvoiceModel) o;
+        Invoice that = (Invoice) o;
         return zipCode == that.zipCode && ItemId == that.ItemId && quantity == that.quantity && Float.compare(that.unit_price, unit_price) == 0 && Float.compare(that.subtotal, subtotal) == 0 && Float.compare(that.tax, tax) == 0 && Float.compare(that.processingFee, processingFee) == 0 && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(street, that.street) && Objects.equals(city, that.city) && Objects.equals(state, that.state) && Objects.equals(itemType, that.itemType) && Objects.equals(total, that.total);
     }
 
