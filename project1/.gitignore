@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### sql scripts
+src/main/resources/create_db.sql
+src/main/resources/seeder.sql
