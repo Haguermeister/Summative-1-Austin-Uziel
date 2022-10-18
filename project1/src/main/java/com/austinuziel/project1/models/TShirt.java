@@ -16,15 +16,25 @@ public class TShirt extends SaleItem{
 
     private String size;
     private String color;
+    private String description;
 
     public TShirt() {
     }
 
-    public TShirt(double price, Integer quantity, String description, Integer TShirtId, String size, String color) {
-        super(price, quantity, description);
+    public TShirt(double price, Integer quantity, Integer TShirtId, String size, String color, String description) {
+        super(price, quantity);
         this.TShirtId = TShirtId;
         this.size = size;
         this.color = color;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getTShirtId() {
@@ -57,12 +67,12 @@ public class TShirt extends SaleItem{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         TShirt tShirt = (TShirt) o;
-        return Objects.equals(TShirtId, tShirt.TShirtId) && Objects.equals(size, tShirt.size) && Objects.equals(color, tShirt.color);
+        return Objects.equals(TShirtId, tShirt.TShirtId) && Objects.equals(size, tShirt.size) && Objects.equals(color, tShirt.color) && Objects.equals(description, tShirt.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), TShirtId, size, color);
+        return Objects.hash(super.hashCode(), TShirtId, size, color, description);
     }
 
     @Override
@@ -71,6 +81,7 @@ public class TShirt extends SaleItem{
                 "TShirtId=" + TShirtId +
                 ", size='" + size + '\'' +
                 ", color='" + color + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

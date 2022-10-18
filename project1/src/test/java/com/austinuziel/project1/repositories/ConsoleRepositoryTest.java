@@ -1,4 +1,4 @@
 package com.austinuziel.project1.repositories;
 
-public class GameConsoleReposityrTest {
+public class ConsoleRepositoryTest {
 }

@@ -21,6 +21,7 @@ public class GameController {
     public List<Game> getGames() {
         return repo.findAll();
     }
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Game getGameById(@PathVariable Integer id) {
@@ -30,6 +31,7 @@ public class GameController {
         }
         return null;
     }
+
     @GetMapping("/title/{title}")
     @ResponseStatus(HttpStatus.OK)
     public Game getGameByTitle(@PathVariable String title) {
@@ -37,17 +39,21 @@ public class GameController {
         if(optional.isPresent()){
             return optional.get();
         }
-        return null;    }
+        return null;
+    }
+
     @GetMapping("/studio/{studio}")
     @ResponseStatus(HttpStatus.OK)
     public List<Game> getGameByStudio(@PathVariable String studio) {
         return repo.findByStudio(studio);
     }
+
     @GetMapping("/esrb/{esrb}")
     @ResponseStatus(HttpStatus.OK)
     public List<Game> getGameByESRB(@PathVariable String esrb) {
         return repo.findByEsrbRating(esrb);
     }
+
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Game addGame(@RequestBody Game game) {return repo.save(game);}
