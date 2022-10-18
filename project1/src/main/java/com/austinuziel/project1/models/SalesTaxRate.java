@@ -3,6 +3,7 @@ package com.austinuziel.project1.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Objects;
 
@@ -10,6 +11,9 @@ import java.util.Objects;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "sales_tax_rate")
 public class SalesTaxRate {
+
+    @Id
+    private Integer id;
     private String state;
     private double rate;
 
