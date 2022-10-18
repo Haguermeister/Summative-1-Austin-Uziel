@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -74,6 +74,8 @@ public class InvoiceControllerTest {
 
         doReturn(outputInvoice).when(invoiceService).createNewInvoice(inputInvoice);
         doReturn(allInvoices).when(invoiceService).getAllInvoices();
+
+        doNothing().when(invoiceService).deleteInvoiceById(1);
 
 
     }
@@ -159,6 +161,12 @@ public class InvoiceControllerTest {
 
 //    DELETE ENDPOINTS
 
+    @Test
+    public void shouldRespondWithA204CodeStatusWhenDeletingAnInvoiceById() throws Exception {
+        mockMvc.perform(delete("/invoice/1"))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
 
 
 }
