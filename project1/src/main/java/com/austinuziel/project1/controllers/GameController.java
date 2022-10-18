@@ -30,17 +30,20 @@ public class GameController {
         }
         return null;
     }
-    @GetMapping("/{title}")
+    @GetMapping("/title/{title}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Game> getGameByTitle(@PathVariable String title) {
-        return repo.findByTitle(title);
-    }
-    @GetMapping("/{studio}")
+    public Game getGameByTitle(@PathVariable String title) {
+        Optional<Game> optional = repo.findByTitle(title);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        return null;    }
+    @GetMapping("/studio/{studio}")
     @ResponseStatus(HttpStatus.OK)
     public List<Game> getGameByStudio(@PathVariable String studio) {
         return repo.findByStudio(studio);
     }
-    @GetMapping("/{esrb}")
+    @GetMapping("/esrb/{esrb}")
     @ResponseStatus(HttpStatus.OK)
     public List<Game> getGameByESRB(@PathVariable String esrb) {
         return repo.findByEsrbRating(esrb);

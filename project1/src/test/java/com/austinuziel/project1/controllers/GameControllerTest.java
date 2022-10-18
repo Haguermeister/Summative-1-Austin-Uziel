@@ -75,13 +75,21 @@ public class GameControllerTest {
         inputGame2JSON = mapper.writeValueAsString(inputGame2);
         outputGame2JSON = mapper.writeValueAsString(outputGame2);
 
-        List<Game> returnList = new ArrayList<>(Arrays.asList(outputGame));
+        List<Game> returnList = new ArrayList<>(Arrays.asList(outputGame,outputGame2));
         returnListJSON = mapper.writeValueAsString(returnList);
 
         Optional<Game> optional = Optional.of(outputGame);
 
+        String studioName = "EA Sports";
+        String esrbVal = "M";
+        String title = "NHL 2022";
+
+
+        doReturn(optional).when(gameRepo).findByTitle(title);
         doReturn(optional).when(gameRepo).findById(1);
         doReturn(returnList).when(gameRepo).findAll();
+        doReturn(returnList).when(gameRepo).findByStudio(studioName);
+        doReturn(returnList).when(gameRepo).findByEsrbRating(esrbVal);
         doReturn(outputGame).when(gameRepo).save(inputGame);
         doReturn(outputGame2).when(gameRepo).save(inputGame2);
     }
@@ -99,7 +107,32 @@ public class GameControllerTest {
         // Arrange and Act
         mockMvc.perform(get("/game/1"))
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNotEmpty());
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(content().json(outputGameJSON));
+    }
+    @Test
+    public void shouldReturnGamesByStudio() throws Exception {
+        // Arrange and Act
+        mockMvc.perform(get("/game/studio/EA Sports"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(content().json(returnListJSON));
+    }
+    @Test
+    public void shouldReturnGamesByEsrb() throws Exception {
+        // Arrange and Act
+        mockMvc.perform(get("/game/esrb/M"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(content().json(returnListJSON));
+    }
+    @Test
+    public void shouldReturnGamesByTitle() throws Exception {
+        // Arrange and Act
+        mockMvc.perform(get("/game/title/NHL 2022"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(content().json(outputGameJSON));
     }
 
     @Test

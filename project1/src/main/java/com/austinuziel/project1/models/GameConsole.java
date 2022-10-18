@@ -18,6 +18,7 @@ public class GameConsole extends SaleItem{
     private String memoryAmount;
 
     private String processor;
+    @Column(unique=true)
     private String model;
     private String manufacturer;
 
