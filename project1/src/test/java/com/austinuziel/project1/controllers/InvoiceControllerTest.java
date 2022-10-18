@@ -69,12 +69,13 @@ public class InvoiceControllerTest {
         outputJson = mapper.writeValueAsString(outputInvoice);
         outputJson2 = mapper.writeValueAsString(outputInvoice2);
 
-        List<Invoice> allInvoices = new ArrayList<>(Arrays.asList(outputInvoice,outputInvoice2));
+        List<Invoice> allInvoices = new ArrayList<>(Arrays.asList(outputInvoice, outputInvoice2));
         allInvoicesJSONFormat = mapper.writeValueAsString(allInvoices);
 
         doReturn(outputInvoice).when(invoiceService).createNewInvoice(inputInvoice);
         doReturn(allInvoices).when(invoiceService).getAllInvoices();
-
+        doReturn(Optional.of(outputInvoice)).when(invoiceService).getInvoiceByName("Uziel");
+        doReturn(Optional.of(outputInvoice)).when(invoiceService).getInvoiceById(1);
         doNothing().when(invoiceService).deleteInvoiceById(1);
 
 
@@ -134,11 +135,21 @@ public class InvoiceControllerTest {
 
     @Test
     public void shouldReturnOneInvoiceById() throws Exception {
-        mockMvc.perform(get("/invoice"))
+        mockMvc.perform(get("/invoice/getById/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0]").isNotEmpty());
+                .andExpect(content().json(outputJson));
+        ;
     }
+
+    @Test
+    public void shouldReturnOneInvoiceByName() throws Exception {
+        mockMvc.perform(get("/invoice/getByName/Uziel"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(outputJson));
+    }
+
 
     @Test
     public void shouldReturn200StatusCodeWhenGettingAnInvoiceById() throws Exception {
@@ -147,16 +158,6 @@ public class InvoiceControllerTest {
         mockMvc.perform(get("/invoice", 1))
                 .andDo(print())
                 .andExpect(status().isOk());
-    }
-    @Test
-    public void shouldReturnEmptyResponseWhenInvoiceNotFound() throws Exception {
-
-        doReturn(Optional.empty()).when(invoiceService).getInvoiceById(100);
-        mockMvc.perform(get("/invoice/100"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0]").doesNotExist())
-        ;
     }
 
 //    DELETE ENDPOINTS
