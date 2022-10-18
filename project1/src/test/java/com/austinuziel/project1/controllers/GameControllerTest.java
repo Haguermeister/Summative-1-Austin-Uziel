@@ -38,6 +38,7 @@ public class GameControllerTest {
     private String inputGame2JSON;
     private String outputGame2JSON;
     private String returnListJSON;
+
     @Before
     public void setUp() throws Exception {
         Game inputGame = new Game();
@@ -58,7 +59,7 @@ public class GameControllerTest {
         inputGame2.setGameId(1);
 
 
-        Game outputGame = new Game(20.00, 50, "Hockey Game", 1, "M", "EA Sports", "NHL 2022");
+        Game outputGame = new Game(20.00, 50, 1, "M", "EA Sports", "NHL 2022", "Hockey Game");
 
         Game outputGame2 = new Game();
         outputGame2.setQuantity(40);
@@ -75,21 +76,16 @@ public class GameControllerTest {
         inputGame2JSON = mapper.writeValueAsString(inputGame2);
         outputGame2JSON = mapper.writeValueAsString(outputGame2);
 
-        List<Game> returnList = new ArrayList<>(Arrays.asList(outputGame,outputGame2));
+        List<Game> returnList = new ArrayList<>(Arrays.asList(outputGame, outputGame2));
         returnListJSON = mapper.writeValueAsString(returnList);
 
         Optional<Game> optional = Optional.of(outputGame);
 
-        String studioName = "EA Sports";
-        String esrbVal = "M";
-        String title = "NHL 2022";
-
-
-        doReturn(optional).when(gameRepo).findByTitle(title);
+        doReturn(optional).when(gameRepo).findByTitle("NHL 2022");
         doReturn(optional).when(gameRepo).findById(1);
         doReturn(returnList).when(gameRepo).findAll();
-        doReturn(returnList).when(gameRepo).findByStudio(studioName);
-        doReturn(returnList).when(gameRepo).findByEsrbRating(esrbVal);
+        doReturn(returnList).when(gameRepo).findByStudio("EA Sports");
+        doReturn(returnList).when(gameRepo).findByEsrbRating("M");
         doReturn(outputGame).when(gameRepo).save(inputGame);
         doReturn(outputGame2).when(gameRepo).save(inputGame2);
     }
@@ -102,6 +98,7 @@ public class GameControllerTest {
                 .andExpect(jsonPath("$[0]").isNotEmpty())
                 .andExpect(content().json(returnListJSON));
     }
+
     @Test
     public void shouldReturnGameById() throws Exception {
         // Arrange and Act
@@ -110,6 +107,7 @@ public class GameControllerTest {
                 .andExpect(jsonPath("$").isNotEmpty())
                 .andExpect(content().json(outputGameJSON));
     }
+
     @Test
     public void shouldReturnGamesByStudio() throws Exception {
         // Arrange and Act
@@ -118,6 +116,7 @@ public class GameControllerTest {
                 .andExpect(jsonPath("$").isNotEmpty())
                 .andExpect(content().json(returnListJSON));
     }
+
     @Test
     public void shouldReturnGamesByEsrb() throws Exception {
         // Arrange and Act
@@ -126,6 +125,7 @@ public class GameControllerTest {
                 .andExpect(jsonPath("$").isNotEmpty())
                 .andExpect(content().json(returnListJSON));
     }
+
     @Test
     public void shouldReturnGamesByTitle() throws Exception {
         // Arrange and Act
@@ -139,8 +139,8 @@ public class GameControllerTest {
     public void shouldCreateNewGame() throws Exception {
         // Arrange and Act
         mockMvc.perform(post("/game")
-                .content(inputGameJSON)
-                .contentType(MediaType.APPLICATION_JSON))
+                        .content(inputGameJSON)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().isCreated())
                 .andExpect(content().json(outputGameJSON));
     }
@@ -149,11 +149,12 @@ public class GameControllerTest {
     public void shouldUpdateGame() throws Exception {
         // Arrange and Act
         mockMvc.perform(put("/game")
-                .content(inputGame2JSON)
-                .contentType(MediaType.APPLICATION_JSON))
+                        .content(inputGame2JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
+
     @Test
     public void shouldDeleteGame() throws Exception {
         // Arrange and Act

@@ -17,19 +17,32 @@ public class Game extends SaleItem{
     @Column(name = "esrb_rating")
     private String esrbRating;
 
-    private String studio;
     @Column(unique=true)
     private String title;
+
+    private String studio;
+    private String description;
+
+
 
     public Game() {
     }
 
-    public Game(double price, Integer quantity, String description, Integer gameId, String esrbRating, String studio, String title) {
-        super(price, quantity, description);
+    public Game(double price, Integer quantity, Integer gameId, String esrbRating, String title, String studio, String description) {
+        super(price, quantity);
         this.gameId = gameId;
         this.esrbRating = esrbRating;
-        this.studio = studio;
         this.title = title;
+        this.studio = studio;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getGameId() {
@@ -71,25 +84,22 @@ public class Game extends SaleItem{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Game game = (Game) o;
-        return Objects.equals(gameId, game.gameId) && Objects.equals(title, game.title) && Objects.equals(esrbRating, game.esrbRating) && Objects.equals(studio, game.studio);
+        return Objects.equals(gameId, game.gameId) && Objects.equals(esrbRating, game.esrbRating) && Objects.equals(title, game.title) && Objects.equals(studio, game.studio) && Objects.equals(description, game.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), gameId, title, esrbRating, studio);
+        return Objects.hash(super.hashCode(), gameId, esrbRating, title, studio, description);
     }
 
     @Override
     public String toString() {
         return "Game{" +
                 "gameId=" + gameId +
-                ", title='" + title + '\'' +
                 ", esrbRating='" + esrbRating + '\'' +
+                ", title='" + title + '\'' +
                 ", studio='" + studio + '\'' +
-                '}' + "is also a "+ "SaleItem{" +
-                "price=" + this.getPrice() +
-                ", quantity=" + this.getQuantity() +
-                ", description='" + this.getDescription() + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
