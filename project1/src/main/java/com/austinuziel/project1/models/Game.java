@@ -18,6 +18,7 @@ public class Game extends SaleItem{
     private String esrbRating;
 
     private String studio;
+    @Column(unique=true)
     private String title;
 
     public Game() {
