@@ -1,13 +1,15 @@
 package com.austinuziel.project1.models;
 
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@MappedSuperclass
 abstract class SaleItem {
+
     private double price;
     private Integer quantity;
     private String description;
-
 
     public SaleItem() {
     }

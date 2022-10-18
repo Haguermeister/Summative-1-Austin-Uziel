@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/GameConsole")
+@RequestMapping("/gameConsole")
 public class GameConsoleController {
     @Autowired
     GameConsoleRepo repo;

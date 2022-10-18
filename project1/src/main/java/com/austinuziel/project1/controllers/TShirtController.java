@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/TShirt")
+@RequestMapping("/tshirt")
 public class TShirtController {
     @Autowired
     TShirtRepo repo;

@@ -85,6 +85,10 @@ public class Game extends SaleItem{
                 ", title='" + title + '\'' +
                 ", esrbRating='" + esrbRating + '\'' +
                 ", studio='" + studio + '\'' +
+                '}' + "is also a "+ "SaleItem{" +
+                "price=" + this.getPrice() +
+                ", quantity=" + this.getQuantity() +
+                ", description='" + this.getDescription() + '\'' +
                 '}';
     }
 }
