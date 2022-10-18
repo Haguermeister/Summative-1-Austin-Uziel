@@ -1,6 +1,8 @@
 package com.austinuziel.project1.viewModel;
 
 
+import java.util.Objects;
+
 public class InvoiceModelView {
 
     //    FIELDS
@@ -98,5 +100,32 @@ public class InvoiceModelView {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InvoiceModelView that = (InvoiceModelView) o;
+        return zipCode == that.zipCode && ItemId == that.ItemId && quantity == that.quantity && Objects.equals(Name, that.Name) && Objects.equals(street, that.street) && Objects.equals(city, that.city) && Objects.equals(state, that.state) && Objects.equals(itemType, that.itemType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Name, street, city, state, zipCode, itemType, ItemId, quantity);
+    }
+
+    @Override
+    public String toString() {
+        return "InvoiceModelView{" +
+                "Name='" + Name + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode=" + zipCode +
+                ", itemType='" + itemType + '\'' +
+                ", ItemId=" + ItemId +
+                ", quantity=" + quantity +
+                '}';
     }
 }

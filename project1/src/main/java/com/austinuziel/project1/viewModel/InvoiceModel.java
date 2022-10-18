@@ -3,6 +3,7 @@ package com.austinuziel.project1.viewModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -178,5 +179,38 @@ public class InvoiceModel {
 
     public void setTotal(Long total) {
         this.total = total;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InvoiceModel that = (InvoiceModel) o;
+        return zipCode == that.zipCode && ItemId == that.ItemId && quantity == that.quantity && Float.compare(that.unit_price, unit_price) == 0 && Float.compare(that.subtotal, subtotal) == 0 && Float.compare(that.tax, tax) == 0 && Float.compare(that.processingFee, processingFee) == 0 && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(street, that.street) && Objects.equals(city, that.city) && Objects.equals(state, that.state) && Objects.equals(itemType, that.itemType) && Objects.equals(total, that.total);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, street, city, state, zipCode, itemType, ItemId, quantity, unit_price, subtotal, tax, processingFee, total);
+    }
+
+    @Override
+    public String toString() {
+        return "InvoiceModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode=" + zipCode +
+                ", itemType='" + itemType + '\'' +
+                ", ItemId=" + ItemId +
+                ", quantity=" + quantity +
+                ", unit_price=" + unit_price +
+                ", subtotal=" + subtotal +
+                ", tax=" + tax +
+                ", processingFee=" + processingFee +
+                ", total=" + total +
+                '}';
     }
 }
