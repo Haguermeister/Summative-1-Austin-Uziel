@@ -30,7 +30,7 @@ public class Invoice {
     private String itemType;
 
     @Column(name = "item_id")
-    private int ItemId;
+    private int itemId;
 
     private int quantity;
 
@@ -57,7 +57,7 @@ public class Invoice {
         this.state = state;
         this.zipCode = zipCode;
         this.itemType = itemType;
-        ItemId = itemId;
+        this.itemId = itemId;
         this.quantity = quantity;
         this.unit_price = unit_price;
         this.subtotal = subtotal;
@@ -125,11 +125,11 @@ public class Invoice {
     }
 
     public int getItemId() {
-        return ItemId;
+        return itemId;
     }
 
     public void setItemId(int itemId) {
-        ItemId = itemId;
+        this.itemId = itemId;
     }
 
     public int getQuantity() {
@@ -184,18 +184,18 @@ public class Invoice {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Invoice that = (Invoice) o;
-        return zipCode == that.zipCode && ItemId == that.ItemId && quantity == that.quantity && Float.compare(that.unit_price, unit_price) == 0 && Float.compare(that.subtotal, subtotal) == 0 && Float.compare(that.tax, tax) == 0 && Float.compare(that.processingFee, processingFee) == 0 && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(street, that.street) && Objects.equals(city, that.city) && Objects.equals(state, that.state) && Objects.equals(itemType, that.itemType) && Objects.equals(total, that.total);
+        Invoice invoice = (Invoice) o;
+        return zipCode == invoice.zipCode && itemId == invoice.itemId && quantity == invoice.quantity && Float.compare(invoice.unit_price, unit_price) == 0 && Float.compare(invoice.subtotal, subtotal) == 0 && Float.compare(invoice.tax, tax) == 0 && Float.compare(invoice.processingFee, processingFee) == 0 && Objects.equals(id, invoice.id) && Objects.equals(name, invoice.name) && Objects.equals(street, invoice.street) && Objects.equals(city, invoice.city) && Objects.equals(state, invoice.state) && Objects.equals(itemType, invoice.itemType) && Objects.equals(total, invoice.total);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, street, city, state, zipCode, itemType, ItemId, quantity, unit_price, subtotal, tax, processingFee, total);
+        return Objects.hash(id, name, street, city, state, zipCode, itemType, itemId, quantity, unit_price, subtotal, tax, processingFee, total);
     }
 
     @Override
     public String toString() {
-        return "InvoiceModel{" +
+        return "Invoice{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", street='" + street + '\'' +
@@ -203,7 +203,7 @@ public class Invoice {
                 ", state='" + state + '\'' +
                 ", zipCode=" + zipCode +
                 ", itemType='" + itemType + '\'' +
-                ", ItemId=" + ItemId +
+                ", itemId=" + itemId +
                 ", quantity=" + quantity +
                 ", unit_price=" + unit_price +
                 ", subtotal=" + subtotal +
