@@ -3,6 +3,7 @@ package com.austinuziel.project1.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -12,15 +13,20 @@ public class Game extends SaleItem{
     @Id
     @Column(name = "game_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Integer gameId;
 
     @Column(name = "esrb_rating")
+    @NotNull
     private String esrbRating;
 
     @Column(unique=true)
+    @NotNull
     private String title;
 
+    @NotNull
     private String studio;
+    @NotNull
     private String description;
 
 

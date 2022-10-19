@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +15,9 @@ public class SalesTaxRate {
 
     @Id
     private Integer id;
+    @NotNull
     private String state;
+    @NotNull
     private double rate;
 
     public SalesTaxRate() {

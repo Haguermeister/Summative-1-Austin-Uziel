@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +18,7 @@ public class ProcessingFee {
     private Integer id;
 
     @Column(name = "product_type")
+    @NotNull
     private String productType;
 
     private double fee;

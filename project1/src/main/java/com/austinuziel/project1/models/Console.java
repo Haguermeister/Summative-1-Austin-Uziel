@@ -3,6 +3,7 @@ package com.austinuziel.project1.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +13,7 @@ public class Console extends SaleItem{
     @Id
     @Column(name = "console_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Integer consoleId;
 
     @Column(name = "memory_amount")
@@ -19,7 +21,9 @@ public class Console extends SaleItem{
 
     private String processor;
     @Column(unique=true)
+    @NotNull
     private String model;
+    @NotNull
     private String manufacturer;
 
     public Console() {

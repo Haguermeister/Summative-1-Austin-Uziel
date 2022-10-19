@@ -2,6 +2,7 @@ package com.austinuziel.project1.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -13,36 +14,37 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "invoice_id")
+    @NotNull
     private Integer id;
-
+    @NotNull
     private String name;
-
+    @NotNull
     private String street;
-
+    @NotNull
     private String city;
-
+    @NotNull
     private String state;
-
     @Column(name = "zipcode")
+    @NotNull
     private int zipCode;
-
     @Column(name = "item_type")
+    @NotNull
     private String itemType;
-
     @Column(name = "item_id")
+    @NotNull
     private int itemId;
-
+    @NotNull
     private int quantity;
-
+    @NotNull
     private float unit_price;
-
+    @NotNull
     private float subtotal;
-
+    @NotNull
     private float tax;
-
     @Column(name = "processing_fee")
+    @NotNull
     private float processingFee;
-
+    @NotNull
     private Long total;
 
     //    CONSTRUCTORS
