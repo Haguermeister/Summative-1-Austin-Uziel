@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -148,18 +149,31 @@ public class GameControllerTest {
     @Test
     public void shouldUpdateGame() throws Exception {
         // Arrange and Act
+        Game inputGame2 = new Game();
+        inputGame2.setQuantity(40);
+        inputGame2.setPrice(10.00);
+        inputGame2.setDescription("Football Game");
+        inputGame2.setStudio("EA Sports");
+        inputGame2.setTitle("NCAA 2022");
+        inputGame2.setEsrbRating("M");
+        inputGame2.setGameId(1);
+
         mockMvc.perform(put("/game")
                         .content(inputGame2JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
+
+        verify(gameRepo).save(inputGame2);
     }
 
     @Test
     public void shouldDeleteGame() throws Exception {
         // Arrange and Act
-        mockMvc.perform(delete("/game/1"))
+        mockMvc.perform(delete("/game/2"))
                 .andDo(print())
                 .andExpect(status().isNoContent());
+
+        verify(gameRepo).deleteById(2);
     }
 }
