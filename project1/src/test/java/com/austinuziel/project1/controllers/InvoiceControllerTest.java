@@ -48,16 +48,16 @@ public class InvoiceControllerTest {
     private Invoice outputInvoice3;
     private Invoice outputInvoice4;
 
-    String inputJson;
-    String outputJson;
-    String outputJson2;
-    String allInvoicesJSONFormat;
-    String allInvoicesJSONFormat2;
+    private String inputJson;
+    private String outputJson;
+    private String outputJson2;
+    private String allInvoicesJSONFormat;
+    private String allInvoicesJSONFormat2;
 
     @Before
     public void setUp() throws Exception {
         inputInvoice = new Invoice(
-                1, "Uziel", "123 ST MAIN", "Dallas", "TX", 12345, "Game Console", 1,
+                 "Uziel", "123 ST MAIN", "Dallas", "TX", 12345, "Game Console", 1,
                 4, 5.99F, 23.96F, 6.9F, 5.99F, 3682L
         );
 
@@ -100,7 +100,6 @@ public class InvoiceControllerTest {
     //    POST ENDPOINTS
     @Test
     public void shouldReturnANewInvoiceInPostRequest() throws Exception {
-
         // Arrange and Act
         mockMvc.perform(post("/invoice")
                         .content(inputJson)

@@ -51,6 +51,22 @@ public class Invoice {
     public Invoice() {
     }
 
+    public Invoice(String name, String street, String city, String state, Integer zipCode, String itemType, Integer itemId, Integer quantity, Float unit_price, Float subtotal, Float tax, Float processingFee, Long total) {
+        this.name = name;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.itemType = itemType;
+        this.itemId = itemId;
+        this.quantity = quantity;
+        this.unit_price = unit_price;
+        this.subtotal = subtotal;
+        this.tax = tax;
+        this.processingFee = processingFee;
+        this.total = total;
+    }
+
     public Invoice(Integer id, String name, String street, String city, String state, Integer zipCode, String itemType, Integer itemId, Integer quantity, Float unit_price, Float subtotal, Float tax, Float processingFee, Long total) {
         this.id = id;
         this.name = name;
