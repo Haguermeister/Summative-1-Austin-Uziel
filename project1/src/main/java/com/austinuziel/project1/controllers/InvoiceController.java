@@ -54,7 +54,7 @@ public class InvoiceController {
     }
     @GetMapping("/getByName/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Invoice> getInvoiceById(@PathVariable String name) {
+    public List<Invoice> getInvoiceById(@PathVariable String name) {
         return invoiceService.getInvoiceByName(name);
     }
 
