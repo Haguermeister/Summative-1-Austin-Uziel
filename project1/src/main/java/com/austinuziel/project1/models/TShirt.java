@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "t_shirt")
-public class TShirt extends SaleItem{
+public class TShirt extends SaleItem {
     @Id
     @Column(name = "t_shirt_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -45,7 +45,6 @@ public class GameControllerTest {
     private String inputGame3JSON;
 
 
-
     @Before
     public void setUp() throws Exception {
         inputGame = new Game();
@@ -187,6 +186,7 @@ public class GameControllerTest {
 
         verify(gameRepo).deleteById(2);
     }
+
     @Test
     public void shouldRespondWith422WhenValueIsNull() throws Exception {
         inputGame3JSON = mapper.writeValueAsString(inputGame3);

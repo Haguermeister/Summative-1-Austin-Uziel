@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "game")
-public class Game extends SaleItem{
+public class Game extends SaleItem {
     @Id
     @Column(name = "game_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class Game extends SaleItem{
     @NotNull(message = "You must supply a String for esrbRating")
     private String esrbRating;
 
-    @Column(unique=true)
+    @Column(unique = true)
     @NotNull(message = "You must supply a String for title")
     private String title;
 

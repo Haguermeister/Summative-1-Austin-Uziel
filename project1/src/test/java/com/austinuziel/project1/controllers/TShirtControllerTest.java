@@ -1,8 +1,6 @@
 package com.austinuziel.project1.controllers;
 
-import com.austinuziel.project1.models.Game;
 import com.austinuziel.project1.models.TShirt;
-import com.austinuziel.project1.repositories.GameRepo;
 import com.austinuziel.project1.repositories.TShirtRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
