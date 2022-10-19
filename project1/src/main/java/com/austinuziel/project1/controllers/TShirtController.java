@@ -26,7 +26,7 @@ public class TShirtController {
     @ResponseStatus(HttpStatus.OK)
     public TShirt getTShirtByID(@PathVariable Integer id) {
         Optional<TShirt> optional = repo.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             return optional.get();
         }
         return null;

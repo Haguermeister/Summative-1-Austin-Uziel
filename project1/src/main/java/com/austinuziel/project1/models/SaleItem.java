@@ -1,6 +1,5 @@
 package com.austinuziel.project1.models;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;

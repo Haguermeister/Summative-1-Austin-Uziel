@@ -19,7 +19,7 @@ public class CustomErrorResponse {
     LocalDateTime timestamp;
 
     public CustomErrorResponse(HttpStatus status, String message) {
-        this.errorMsg  = message;
+        this.errorMsg = message;
         this.errorCode = status.toString();
         this.timestamp = LocalDateTime.now();
     }
