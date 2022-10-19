@@ -40,14 +40,19 @@ public class InvoiceControllerTest {
 
     private ObjectMapper mapper = new ObjectMapper();
 
+    private List<Invoice> allInvoices2;
+
     private Invoice inputInvoice;
     private Invoice outputInvoice;
     private Invoice outputInvoice2;
+    private Invoice outputInvoice3;
+    private Invoice outputInvoice4;
 
     String inputJson;
     String outputJson;
     String outputJson2;
     String allInvoicesJSONFormat;
+    String allInvoicesJSONFormat2;
 
     @Before
     public void setUp() throws Exception {
@@ -65,16 +70,27 @@ public class InvoiceControllerTest {
                 7, 5.99F, 23.96F, 6.9F, 5.99F, 2121L
         );
 
+        outputInvoice3 = new Invoice(
+                3, "Uzi", "123 ST MAIN", "Dallas", "TX", 12345, "Game Console", 1,
+                4, 5.99F, 23.96F, 6.9F, 5.99F, 3682L
+        );
+        outputInvoice4 = new Invoice(
+                4, "Uzi", "123 ST MAIN", "Dallas", "MT", 12345, "Game", 2,
+                7, 5.99F, 23.96F, 6.9F, 5.99F, 2121L
+        );
+
         inputJson = mapper.writeValueAsString(inputInvoice);
         outputJson = mapper.writeValueAsString(outputInvoice);
         outputJson2 = mapper.writeValueAsString(outputInvoice2);
 
         List<Invoice> allInvoices = new ArrayList<>(Arrays.asList(outputInvoice, outputInvoice2));
+        allInvoices2 = new ArrayList<>(Arrays.asList(outputInvoice3, outputInvoice4));
         allInvoicesJSONFormat = mapper.writeValueAsString(allInvoices);
+        allInvoicesJSONFormat2 = mapper.writeValueAsString(allInvoices2);
 
         doReturn(outputInvoice).when(invoiceService).createNewInvoice(inputInvoice);
         doReturn(allInvoices).when(invoiceService).getAllInvoices();
-        doReturn(Optional.of(outputInvoice)).when(invoiceService).getInvoiceByName("Uziel");
+        doReturn(allInvoices2).when(invoiceService).getInvoiceByName("Uzi");
         doReturn(Optional.of(outputInvoice)).when(invoiceService).getInvoiceById(1);
         doNothing().when(invoiceService).deleteInvoiceById(1);
 
@@ -143,11 +159,11 @@ public class InvoiceControllerTest {
     }
 
     @Test
-    public void shouldReturnOneInvoiceByName() throws Exception {
-        mockMvc.perform(get("/invoice/getByName/Uziel"))
+    public void shouldReturnAListOfInvoiceByName() throws Exception {
+        mockMvc.perform(get("/invoice/getByName/Uzi"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(outputJson));
+                .andExpect(content().json(allInvoicesJSONFormat2));
     }
 
 

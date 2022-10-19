@@ -41,7 +41,7 @@ public class InvoiceService {
         return invoiceRepo.findById(id);
     }
 
-    public Optional<Invoice> getInvoiceByName(String name) {
+    public List<Invoice> getInvoiceByName(String name) {
         return invoiceRepo.findByName(name);
     }
 
