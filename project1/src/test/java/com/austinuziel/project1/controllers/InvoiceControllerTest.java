@@ -1,10 +1,6 @@
 package com.austinuziel.project1.controllers;
-
-import com.austinuziel.project1.models.Game;
 import com.austinuziel.project1.models.Invoice;
-import com.austinuziel.project1.repositories.InvoiceRepo;
 import com.austinuziel.project1.services.InvoiceService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -157,26 +153,26 @@ public class InvoiceControllerTest {
     }
 
     @Test
-    public void shouldReturnA400StatusCodeOnUnSuccessfulPostRequest() throws Exception {
+    public void shouldReturnA422StatusCodeOnUnSuccessfulPostRequest() throws Exception {
 
         // Arrange and Act
         mockMvc.perform(post("/invoice")
                         .content(inputJsonBadRequest)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isUnprocessableEntity());
     }
 
     //    PUT ENDPOINTS
     @Test
-    public void shouldReturn400HttpOnUnSuccessfulResponseOnPut() throws Exception {
+    public void shouldReturn422HttpStatusCodeOnUnSuccessfulResponseOnPut() throws Exception {
 
         // Arrange and Act
         mockMvc.perform(put("/invoice")       // Act
                         .content(inputJsonBadRequest)                     // Act
                         .contentType(MediaType.APPLICATION_JSON)    // Act
                 ).andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
