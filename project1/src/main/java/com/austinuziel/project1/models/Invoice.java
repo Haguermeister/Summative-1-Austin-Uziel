@@ -12,7 +12,7 @@ public class Invoice {
 
     //    FIELDS
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "invoice_id")
     private Integer id;
     @NotNull(message = "You must supply a String for name")
