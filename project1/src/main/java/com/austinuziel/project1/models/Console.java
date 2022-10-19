@@ -13,17 +13,17 @@ public class Console extends SaleItem{
     @Id
     @Column(name = "console_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer consoleId;
 
     @Column(name = "memory_amount")
+    @NotNull(message = "You must supply a String for memoryAmount")
     private String memoryAmount;
 
     private String processor;
     @Column(unique=true)
-    @NotNull
+    @NotNull(message = "You must supply a String for model")
     private String model;
-    @NotNull
+    @NotNull(message = "You must supply a String for manufacturer")
     private String manufacturer;
 
     public Console() {

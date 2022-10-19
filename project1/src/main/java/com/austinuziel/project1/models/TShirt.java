@@ -13,13 +13,12 @@ public class TShirt extends SaleItem{
     @Id
     @Column(name = "t_shirt_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer TShirtId;
-    @NotNull
+    @NotNull(message = "You must supply a String for size")
     private String size;
-    @NotNull
+    @NotNull(message = "You must supply a String for color")
     private String color;
-    @NotNull
+    @NotNull(message = "You must supply a String for desciption")
     private String description;
 
     public TShirt() {

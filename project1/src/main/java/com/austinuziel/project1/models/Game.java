@@ -13,20 +13,19 @@ public class Game extends SaleItem{
     @Id
     @Column(name = "game_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer gameId;
 
     @Column(name = "esrb_rating")
-    @NotNull
+    @NotNull(message = "You must supply a String for esrbRating")
     private String esrbRating;
 
     @Column(unique=true)
-    @NotNull
+    @NotNull(message = "You must supply a String for title")
     private String title;
 
-    @NotNull
+    @NotNull(message = "You must supply a String for studio")
     private String studio;
-    @NotNull
+    @NotNull(message = "You must supply a String for description")
     private String description;
 
 

@@ -7,9 +7,9 @@ import java.util.Objects;
 
 @MappedSuperclass
 abstract class SaleItem {
-    @NotNull
-    private double price;
-    @NotNull
+    @NotNull(message = "You must supply a Double for price")
+    private Double price;
+    @NotNull(message = "You must supply an Integer for manufacturer")
     private Integer quantity;
 
     public SaleItem() {

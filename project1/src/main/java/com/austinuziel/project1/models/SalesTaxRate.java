@@ -15,10 +15,10 @@ public class SalesTaxRate {
 
     @Id
     private Integer id;
-    @NotNull
+    @NotNull(message = "You must supply a String for state")
     private String state;
-    @NotNull
-    private double rate;
+    @NotNull(message = "You must double a String for rate")
+    private Double rate;
 
     public SalesTaxRate() {
     }

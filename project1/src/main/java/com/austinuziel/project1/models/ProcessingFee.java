@@ -18,10 +18,10 @@ public class ProcessingFee {
     private Integer id;
 
     @Column(name = "product_type")
-    @NotNull
+    @NotNull(message = "You must supply an String for productType")
     private String productType;
 
-    private double fee;
+    private Double fee;
 
     public ProcessingFee() {
     }

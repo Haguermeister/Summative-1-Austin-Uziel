@@ -14,37 +14,36 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "invoice_id")
-    @NotNull
     private Integer id;
-    @NotNull
+    @NotNull(message = "You must supply a String for name")
     private String name;
-    @NotNull
+    @NotNull(message = "You must supply a String for Street")
     private String street;
-    @NotNull
+    @NotNull(message = "You must supply a String for City")
     private String city;
-    @NotNull
+    @NotNull(message = "You must supply a String for State")
     private String state;
     @Column(name = "zipcode")
-    @NotNull
-    private int zipCode;
+    @NotNull(message = "You must supply an Integer for zipcode")
+    private Integer zipCode;
     @Column(name = "item_type")
-    @NotNull
+    @NotNull(message = "You must supply a String for itemType")
     private String itemType;
     @Column(name = "item_id")
-    @NotNull
-    private int itemId;
-    @NotNull
-    private int quantity;
-    @NotNull
-    private float unit_price;
-    @NotNull
-    private float subtotal;
-    @NotNull
-    private float tax;
+    @NotNull(message = "You must supply an Integer for itemId")
+    private Integer itemId;
+    @NotNull(message = "You must supply an Integer for quantity")
+    private Integer quantity;
+    @NotNull(message = "You must supply a float for unit_price")
+    private Float unit_price;
+    @NotNull(message = "You must supply a float for subtotal")
+    private Float subtotal;
+    @NotNull(message = "You must supply a float for tax")
+    private Float tax;
     @Column(name = "processing_fee")
-    @NotNull
-    private float processingFee;
-    @NotNull
+    @NotNull(message = "You must supply a float for processingFee")
+    private Float processingFee;
+    @NotNull(message = "You must supply a long for total")
     private Long total;
 
     //    CONSTRUCTORS
