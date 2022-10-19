@@ -1,7 +1,6 @@
 package com.austinuziel.project1.controllers;
 
 import com.austinuziel.project1.models.Console;
-import com.austinuziel.project1.models.Game;
 import com.austinuziel.project1.repositories.ConsoleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
