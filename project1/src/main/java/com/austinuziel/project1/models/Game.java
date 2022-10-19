@@ -3,6 +3,7 @@ package com.austinuziel.project1.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -15,12 +16,16 @@ public class Game extends SaleItem{
     private Integer gameId;
 
     @Column(name = "esrb_rating")
+    @NotNull(message = "You must supply a String for esrbRating")
     private String esrbRating;
 
     @Column(unique=true)
+    @NotNull(message = "You must supply a String for title")
     private String title;
 
+    @NotNull(message = "You must supply a String for studio")
     private String studio;
+    @NotNull(message = "You must supply a String for description")
     private String description;
 
 

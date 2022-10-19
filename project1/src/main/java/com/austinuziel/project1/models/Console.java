@@ -3,6 +3,7 @@ package com.austinuziel.project1.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -15,11 +16,14 @@ public class Console extends SaleItem{
     private Integer consoleId;
 
     @Column(name = "memory_amount")
+    @NotNull(message = "You must supply a String for memoryAmount")
     private String memoryAmount;
 
     private String processor;
     @Column(unique=true)
+    @NotNull(message = "You must supply a String for model")
     private String model;
+    @NotNull(message = "You must supply a String for manufacturer")
     private String manufacturer;
 
     public Console() {

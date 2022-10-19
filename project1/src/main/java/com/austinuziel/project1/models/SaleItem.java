@@ -2,12 +2,14 @@ package com.austinuziel.project1.models;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @MappedSuperclass
 abstract class SaleItem {
-
-    private double price;
+    @NotNull(message = "You must supply a Double for price")
+    private Double price;
+    @NotNull(message = "You must supply an Integer for manufacturer")
     private Integer quantity;
 
     public SaleItem() {

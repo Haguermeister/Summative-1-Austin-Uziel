@@ -2,6 +2,7 @@ package com.austinuziel.project1.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -14,35 +15,35 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "invoice_id")
     private Integer id;
-
+    @NotNull(message = "You must supply a String for name")
     private String name;
-
+    @NotNull(message = "You must supply a String for Street")
     private String street;
-
+    @NotNull(message = "You must supply a String for City")
     private String city;
-
+    @NotNull(message = "You must supply a String for State")
     private String state;
-
     @Column(name = "zipcode")
-    private int zipCode;
-
+    @NotNull(message = "You must supply an Integer for zipcode")
+    private Integer zipCode;
     @Column(name = "item_type")
+    @NotNull(message = "You must supply a String for itemType")
     private String itemType;
-
     @Column(name = "item_id")
-    private int itemId;
-
-    private int quantity;
-
-    private float unit_price;
-
-    private float subtotal;
-
-    private float tax;
-
+    @NotNull(message = "You must supply an Integer for itemId")
+    private Integer itemId;
+    @NotNull(message = "You must supply an Integer for quantity")
+    private Integer quantity;
+    @NotNull(message = "You must supply a float for unit_price")
+    private Float unit_price;
+    @NotNull(message = "You must supply a float for subtotal")
+    private Float subtotal;
+    @NotNull(message = "You must supply a float for tax")
+    private Float tax;
     @Column(name = "processing_fee")
-    private float processingFee;
-
+    @NotNull(message = "You must supply a float for processingFee")
+    private Float processingFee;
+    @NotNull(message = "You must supply a long for total")
     private Long total;
 
     //    CONSTRUCTORS
