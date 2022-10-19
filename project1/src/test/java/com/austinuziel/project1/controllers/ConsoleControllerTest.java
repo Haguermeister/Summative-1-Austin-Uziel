@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -70,6 +71,7 @@ public class ConsoleControllerTest {
         inputConsole2.setProcessor("I1");
         inputConsole2.setModel("XBOX");
         inputConsole2.setManufacturer("Microsoft");
+        inputConsole2.setConsoleId(2);
 
         Console outputConsole2 = new Console();
         outputConsole2.setPrice(250.99);
@@ -134,19 +136,32 @@ public class ConsoleControllerTest {
     @Test
     public void shouldUpdateGameConsole() throws Exception {
         // Arrange and Act
+        Console inputConsole2 = new Console();
+        inputConsole2.setPrice(250.99);
+        inputConsole2.setQuantity(200);
+        inputConsole2.setMemoryAmount("1 Gigabytes");
+        inputConsole2.setProcessor("I1");
+        inputConsole2.setModel("XBOX");
+        inputConsole2.setManufacturer("Microsoft");
+        inputConsole2.setConsoleId(2);
         mockMvc.perform(put("/gameConsole")
                         .content(inputGameConsole2JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
+
+        verify(consoleRepo).save(inputConsole2);
     }
 
     @Test
     public void shouldDeleteGameConsole() throws Exception {
         // Arrange and Act
-        mockMvc.perform(delete("/gameConsole/1"))
+        mockMvc.perform(delete("/gameConsole/2"))
                 .andDo(print())
                 .andExpect(status().isNoContent());
+
+        verify(consoleRepo).deleteById(2);
     }
+
 }
 
