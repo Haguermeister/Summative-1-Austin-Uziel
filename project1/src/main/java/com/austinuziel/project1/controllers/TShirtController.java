@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/tshirt")
@@ -20,7 +21,17 @@ public class TShirtController {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<TShirt> getTShirts() {
-        return new ArrayList<>();
+        return repo.findAll();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public TShirt getTShirtByID(@PathVariable Integer id) {
+        Optional<TShirt> optional = repo.findById(id);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        return null;
     }
 
     @GetMapping("/color/{color}")
@@ -40,16 +51,18 @@ public class TShirtController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public TShirt addTShirt(@RequestBody @Valid TShirt tShirt) {
-        return new TShirt();
+        return repo.save(tShirt);
     }
 
     @PutMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateTShirt(@RequestBody @Valid TShirt tShirt) {
+        repo.save(tShirt);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTShirt(@PathVariable Integer id) {
+        repo.deleteById(id);
     }
 }

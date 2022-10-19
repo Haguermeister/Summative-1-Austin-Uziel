@@ -55,7 +55,7 @@ public class InvoiceControllerTest {
     @Before
     public void setUp() throws Exception {
         inputInvoice = new Invoice(
-                1, "Uziel", "123 ST MAIN", "Dallas", "TX", 12345, "Game Console", 1,
+                 "Uziel", "123 ST MAIN", "Dallas", "TX", 12345, "Game Console", 1,
                 4, 5.99F, 23.96F, 6.9F, 5.99F, 3682L
         );
 
