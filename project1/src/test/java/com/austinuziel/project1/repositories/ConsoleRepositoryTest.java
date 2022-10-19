@@ -27,14 +27,14 @@ public class ConsoleRepositoryTest {
         console.setManufacturer("Sony");
         console.setModel("PS5");
         console.setProcessor(("I8"));
-        console.setPrice(200);
+        console.setPrice(200.00);
         console.setQuantity(20);
         console.setMemoryAmount(("200 Gigs"));
         console2 = new Console();
         console2.setManufacturer("Microsoft");
         console2.setModel("XBOX One");
         console2.setProcessor(("I12"));
-        console2.setPrice(300);
+        console2.setPrice(300.00);
         console2.setQuantity(30);
         console2.setMemoryAmount(("20 Gigs"));
     }

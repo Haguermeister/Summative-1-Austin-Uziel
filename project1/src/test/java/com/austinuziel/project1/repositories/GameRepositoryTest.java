@@ -28,14 +28,14 @@ public class GameRepositoryTest {
         game.setTitle("NHL");
         game.setEsrbRating("T");
         game.setStudio(("EA Sports"));
-        game.setPrice(60);
+        game.setPrice(60.00);
         game.setQuantity(100);
         game.setDescription(("Slap the puck"));
         game2 = new Game();
         game2.setTitle("NCAA");
         game2.setEsrbRating("M");
         game2.setStudio(("EA Sports"));
-        game2.setPrice(65);
+        game2.setPrice(65.00);
         game2.setQuantity(85);
         game2.setDescription(("Throw the ball"));    }
 

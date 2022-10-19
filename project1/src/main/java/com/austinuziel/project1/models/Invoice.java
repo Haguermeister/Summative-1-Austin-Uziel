@@ -47,10 +47,11 @@ public class Invoice {
     private Long total;
 
     //    CONSTRUCTORS
+
     public Invoice() {
     }
 
-    public Invoice(Integer id, String name, String street, String city, String state, int zipCode, String itemType, int itemId, int quantity, float unit_price, float subtotal, float tax, float processingFee, Long total) {
+    public Invoice(Integer id, String name, String street, String city, String state, Integer zipCode, String itemType, Integer itemId, Integer quantity, Float unit_price, Float subtotal, Float tax, Float processingFee, Long total) {
         this.id = id;
         this.name = name;
         this.street = street;
@@ -66,8 +67,6 @@ public class Invoice {
         this.processingFee = processingFee;
         this.total = total;
     }
-
-    //    GETTERS AND SETTERS
 
     public Integer getId() {
         return id;
@@ -109,11 +108,11 @@ public class Invoice {
         this.state = state;
     }
 
-    public int getZipCode() {
+    public Integer getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(int zipCode) {
+    public void setZipCode(Integer zipCode) {
         this.zipCode = zipCode;
     }
 
@@ -125,51 +124,51 @@ public class Invoice {
         this.itemType = itemType;
     }
 
-    public int getItemId() {
+    public Integer getItemId() {
         return itemId;
     }
 
-    public void setItemId(int itemId) {
+    public void setItemId(Integer itemId) {
         this.itemId = itemId;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public float getUnit_price() {
+    public Float getUnit_price() {
         return unit_price;
     }
 
-    public void setUnit_price(float unit_price) {
+    public void setUnit_price(Float unit_price) {
         this.unit_price = unit_price;
     }
 
-    public float getSubtotal() {
+    public Float getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(float subtotal) {
+    public void setSubtotal(Float subtotal) {
         this.subtotal = subtotal;
     }
 
-    public float getTax() {
+    public Float getTax() {
         return tax;
     }
 
-    public void setTax(float tax) {
+    public void setTax(Float tax) {
         this.tax = tax;
     }
 
-    public float getProcessingFee() {
+    public Float getProcessingFee() {
         return processingFee;
     }
 
-    public void setProcessingFee(float processingFee) {
+    public void setProcessingFee(Float processingFee) {
         this.processingFee = processingFee;
     }
 
@@ -179,38 +178,5 @@ public class Invoice {
 
     public void setTotal(Long total) {
         this.total = total;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Invoice invoice = (Invoice) o;
-        return zipCode == invoice.zipCode && itemId == invoice.itemId && quantity == invoice.quantity && Float.compare(invoice.unit_price, unit_price) == 0 && Float.compare(invoice.subtotal, subtotal) == 0 && Float.compare(invoice.tax, tax) == 0 && Float.compare(invoice.processingFee, processingFee) == 0 && Objects.equals(id, invoice.id) && Objects.equals(name, invoice.name) && Objects.equals(street, invoice.street) && Objects.equals(city, invoice.city) && Objects.equals(state, invoice.state) && Objects.equals(itemType, invoice.itemType) && Objects.equals(total, invoice.total);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, street, city, state, zipCode, itemType, itemId, quantity, unit_price, subtotal, tax, processingFee, total);
-    }
-
-    @Override
-    public String toString() {
-        return "Invoice{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", street='" + street + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zipCode=" + zipCode +
-                ", itemType='" + itemType + '\'' +
-                ", itemId=" + itemId +
-                ", quantity=" + quantity +
-                ", unit_price=" + unit_price +
-                ", subtotal=" + subtotal +
-                ", tax=" + tax +
-                ", processingFee=" + processingFee +
-                ", total=" + total +
-                '}';
     }
 }

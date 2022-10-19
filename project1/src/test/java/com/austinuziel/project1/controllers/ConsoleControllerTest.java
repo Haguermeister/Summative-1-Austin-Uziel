@@ -44,10 +44,14 @@ public class ConsoleControllerTest {
     private String inputGameConsole2JSON;
     private String outputGameConsole2JSON;
     private String returnListJSON;
+    private Console inputConsole;
+    private Console inputConsole2;
+    private Console outputConsole;
+    private Console outputConsole2;
 
     @Before
     public void setUp() throws Exception {
-        Console inputConsole = new Console();
+        inputConsole = new Console();
         inputConsole.setPrice(150.00);
         inputConsole.setQuantity(100);
         inputConsole.setMemoryAmount("200 Gigabytes");
@@ -64,7 +68,7 @@ public class ConsoleControllerTest {
         outputConsole.setManufacturer("Microsoft");
         outputConsole.setConsoleId(1);
 
-        Console inputConsole2 = new Console();
+        inputConsole2 = new Console();
         inputConsole2.setPrice(250.99);
         inputConsole2.setQuantity(200);
         inputConsole2.setMemoryAmount("1 Gigabytes");
@@ -161,6 +165,17 @@ public class ConsoleControllerTest {
                 .andExpect(status().isNoContent());
 
         verify(consoleRepo).deleteById(2);
+    }
+    @Test
+    public void shouldRespondWith422WhenValueIsNull() throws Exception {
+        inputConsole2.setModel(null);
+        inputGameConsole2JSON = mapper.writeValueAsString(inputConsole2);
+
+        mockMvc.perform(post("/gameConsole")
+                        .content(inputGameConsole2JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 
 }

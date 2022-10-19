@@ -39,10 +39,16 @@ public class GameControllerTest {
     private String inputGame2JSON;
     private String outputGame2JSON;
     private String returnListJSON;
+    private Game inputGame;
+    private Game inputGame2;
+    private Game inputGame3;
+    private String inputGame3JSON;
+
+
 
     @Before
     public void setUp() throws Exception {
-        Game inputGame = new Game();
+        inputGame = new Game();
         inputGame.setQuantity(50);
         inputGame.setPrice(20.00);
         inputGame.setDescription("Hockey Game");
@@ -50,7 +56,7 @@ public class GameControllerTest {
         inputGame.setTitle("NHL 2022");
         inputGame.setEsrbRating("M");
 
-        Game inputGame2 = new Game();
+        inputGame2 = new Game();
         inputGame2.setQuantity(40);
         inputGame2.setPrice(10.00);
         inputGame2.setDescription("Football Game");
@@ -59,7 +65,12 @@ public class GameControllerTest {
         inputGame2.setEsrbRating("M");
         inputGame2.setGameId(1);
 
-
+        inputGame3 = new Game();
+        inputGame3.setQuantity(40);
+        inputGame3.setDescription("Football Game");
+        inputGame3.setTitle("NCAA 2022");
+        inputGame3.setEsrbRating("M");
+        inputGame3.setGameId(1);
         Game outputGame = new Game(20.00, 50, 1, "M", "EA Sports", "NHL 2022", "Hockey Game");
 
         Game outputGame2 = new Game();
@@ -175,5 +186,15 @@ public class GameControllerTest {
                 .andExpect(status().isNoContent());
 
         verify(gameRepo).deleteById(2);
+    }
+    @Test
+    public void shouldRespondWith422WhenValueIsNull() throws Exception {
+        inputGame3JSON = mapper.writeValueAsString(inputGame3);
+
+        mockMvc.perform(post("/game")
+                        .content(inputGame3JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 }

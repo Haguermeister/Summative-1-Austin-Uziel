@@ -50,7 +50,7 @@ public class InvoiceRepositoryTest {
 //        ACT
         invoiceRepo.save(invoice);
 
-        Optional<Invoice> invoice1 = invoiceRepo.findById(invoice.getId());
+        Optional<Invoice> invoice1 = invoiceRepo.findById(invoice.getItemId());
 
 
 //        ASSERT
