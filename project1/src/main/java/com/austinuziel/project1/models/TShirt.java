@@ -3,6 +3,7 @@ package com.austinuziel.project1.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -13,9 +14,11 @@ public class TShirt extends SaleItem{
     @Column(name = "t_shirt_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer TShirtId;
-
+    @NotNull(message = "You must supply a String for size")
     private String size;
+    @NotNull(message = "You must supply a String for color")
     private String color;
+    @NotNull(message = "You must supply a String for desciption")
     private String description;
 
     public TShirt() {

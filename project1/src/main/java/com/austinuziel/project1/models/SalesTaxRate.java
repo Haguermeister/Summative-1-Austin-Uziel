@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -14,8 +15,10 @@ public class SalesTaxRate {
 
     @Id
     private Integer id;
+    @NotNull(message = "You must supply a String for state")
     private String state;
-    private double rate;
+    @NotNull(message = "You must double a String for rate")
+    private Double rate;
 
     public SalesTaxRate() {
     }
