@@ -41,9 +41,13 @@ public class InvoiceService {
         return invoiceRepo.findById(id);
     }
 
+    public Optional<Invoice> getInvoiceByName(String name) {
+        return invoiceRepo.findByName(name);
+    }
+
 //    DELETE METHODS
 
-    public void deleteInvoiceById(int id){
+    public void deleteInvoiceById(int id) {
         invoiceRepo.deleteById(id);
     }
 
