@@ -1,4 +1,5 @@
 package com.austinuziel.project1.repositories;
+import com.austinuziel.project1.models.Game;
 import com.austinuziel.project1.models.TShirt;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,7 @@ public class TShirtRepositoryTest {
     TShirtRepo tShirtRepo;
     private TShirt tShirt;
     private TShirt tShirt2;
+    private TShirt tShirt3;
 
 
     @Before
@@ -31,11 +33,22 @@ public class TShirtRepositoryTest {
         tShirt.setDescription("An old t shirt");
         tShirt.setSize("Medium");
         tShirt.setQuantity(2);
+        tShirt.setPrice(12.99);
         tShirt2 = new TShirt();
         tShirt2.setColor("blue");
         tShirt2.setDescription("A new t shirt");
         tShirt2.setSize("Large");
-        tShirt2.setQuantity(6);  }
+        tShirt2.setPrice(12.99);
+        tShirt2.setQuantity(6);
+        tShirt3 = new TShirt();
+        tShirt3.setColor("blue");
+        tShirt3.setDescription("A new t shirt");
+        tShirt3.setSize("Large");
+        tShirt3.setPrice(12.99);
+        tShirt3.setQuantity(6);
+
+    }
+
 
     @Test
     public void addGetDeleteTShirt() {
@@ -62,4 +75,26 @@ public class TShirtRepositoryTest {
         List<TShirt> tShirtList = tShirtRepo.findAll();
         assertEquals(tShirtList.size(), 2);
     }
+
+    @Test
+    public void getTShirtsByColor() {
+        tShirt = tShirtRepo.save(tShirt);
+        tShirt2 = tShirtRepo.save(tShirt2);
+        tShirt3 = tShirtRepo.save(tShirt3);
+
+        List<TShirt> tShirtList = tShirtRepo.findByColor("blue");
+        assertEquals(tShirtList.size(), 2);
+    }
+
+    @Test
+    public void getTShirtsBySize() {
+        tShirt = tShirtRepo.save(tShirt);
+        tShirt2 = tShirtRepo.save(tShirt2);
+        tShirt3 = tShirtRepo.save(tShirt3);
+
+        List<TShirt> tShirtList = tShirtRepo.findBySize("Medium");
+        assertEquals(tShirtList.size(), 1);
+    }
 }
+
+
