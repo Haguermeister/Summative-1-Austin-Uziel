@@ -23,7 +23,7 @@ public class SalesTaxRate {
     public SalesTaxRate() {
     }
 
-    public SalesTaxRate(String state, double rate) {
+    public SalesTaxRate(String state, Double rate) {
         this.state = state;
         this.rate = rate;
     }
@@ -36,11 +36,11 @@ public class SalesTaxRate {
         this.state = state;
     }
 
-    public double getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public void setRate(double rate) {
+    public void setRate(Double rate) {
         this.rate = rate;
     }
 

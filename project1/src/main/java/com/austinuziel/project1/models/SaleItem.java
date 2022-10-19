@@ -15,16 +15,16 @@ abstract class SaleItem {
     public SaleItem() {
     }
 
-    public SaleItem(double price, Integer quantity) {
+    public SaleItem(Double price, Integer quantity) {
         this.price = price;
         this.quantity = quantity;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

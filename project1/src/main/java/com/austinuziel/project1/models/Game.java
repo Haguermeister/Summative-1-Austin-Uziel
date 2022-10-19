@@ -28,8 +28,6 @@ public class Game extends SaleItem{
     @NotNull(message = "You must supply a String for description")
     private String description;
 
-
-
     public Game() {
     }
 
@@ -42,28 +40,12 @@ public class Game extends SaleItem{
         this.description = description;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Integer getGameId() {
         return gameId;
     }
 
     public void setGameId(Integer gameId) {
         this.gameId = gameId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getEsrbRating() {
@@ -74,6 +56,13 @@ public class Game extends SaleItem{
         this.esrbRating = esrbRating;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getStudio() {
         return studio;
@@ -81,6 +70,14 @@ public class Game extends SaleItem{
 
     public void setStudio(String studio) {
         this.studio = studio;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

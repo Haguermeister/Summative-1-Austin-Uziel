@@ -24,7 +24,7 @@ public class TShirt extends SaleItem{
     public TShirt() {
     }
 
-    public TShirt(double price, Integer quantity, Integer TShirtId, String size, String color, String description) {
+    public TShirt(Double price, Integer quantity, Integer TShirtId, String size, String color, String description) {
         super(price, quantity);
         this.TShirtId = TShirtId;
         this.size = size;

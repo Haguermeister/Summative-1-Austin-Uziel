@@ -26,7 +26,7 @@ public class ProcessingFee {
     public ProcessingFee() {
     }
 
-    public ProcessingFee(String productType, double fee) {
+    public ProcessingFee(String productType, Double fee) {
         this.productType = productType;
         this.fee = fee;
     }
@@ -39,11 +39,11 @@ public class ProcessingFee {
         this.productType = productType;
     }
 
-    public double getFee() {
+    public Double getFee() {
         return fee;
     }
 
-    public void setFee(double fee) {
+    public void setFee(Double fee) {
         this.fee = fee;
     }
 
