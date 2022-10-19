@@ -15,10 +15,10 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class ConsoleRepositoryTest {
 
-
     @Autowired
     ConsoleRepo consoleRepo;
     private Console console;
+    private Console console2;
 
     @Before
     public void setUp() throws Exception {
@@ -30,12 +30,18 @@ public class ConsoleRepositoryTest {
         console.setPrice(200);
         console.setQuantity(20);
         console.setMemoryAmount(("200 Gigs"));
-        console = consoleRepo.save(console);
+        console2 = new Console();
+        console2.setManufacturer("Microsoft");
+        console2.setModel("XBOX One");
+        console2.setProcessor(("I12"));
+        console2.setPrice(300);
+        console2.setQuantity(30);
+        console2.setMemoryAmount(("20 Gigs"));
     }
 
     @Test
     public void addGetDeleteConsole() {
-
+        console = consoleRepo.save(console);
         Optional<Console> console1 = consoleRepo.findById(console.getConsoleId());
         assertEquals(console1.get(), console);
         consoleRepo.deleteById(console.getConsoleId());
@@ -44,57 +50,25 @@ public class ConsoleRepositoryTest {
     }
 
     @Test
-    public void updateArtist() {
-
+    public void updateConsole() {
         console = consoleRepo.save(console);
-
-        console.setManufacturer("Microsoft");
-        console.setModel("XBOX One");
-        console.setProcessor(("I12"));
-        console.setPrice(300);
-        console.setQuantity(30);
-        console.setMemoryAmount(("20 Gigs"));
-
-        consoleRepo.save(console);
-
-        Optional<Console> console1 = consoleRepo.findById(console.getConsoleId());
-        assertEquals(console1.get(), console);
+        console2.setConsoleId(1);
+        console2 = consoleRepo.save(console2);
+        Optional<Console> consoleRet = consoleRepo.findById(console2.getConsoleId());
+        assertEquals(consoleRet.get(), console2);
     }
 
     @Test
-    public void getAllArtists() {
-
+    public void getAllConsoles() {
         console = consoleRepo.save(console);
-
-        console = new Console();
-        console.setManufacturer("Microsoft");
-        console.setModel("XBOX One");
-        console.setProcessor(("I12"));
-        console.setPrice(300);
-        console.setQuantity(30);
-        console.setMemoryAmount(("20 Gigs"));
-
-        console = consoleRepo.save(console);
-
+        console2 = consoleRepo.save(console2);
         List<Console> consoleList = consoleRepo.findAll();
         assertEquals(consoleList.size(), 2);
-
     }
     @Test
-    public void getByManufacturer() {
-
+    public void getConsolesByManufacturer() {
         console = consoleRepo.save(console);
-
-        console = new Console();
-        console.setManufacturer("Microsoft");
-        console.setModel("XBOX One");
-        console.setProcessor(("I12"));
-        console.setPrice(300);
-        console.setQuantity(30);
-        console.setMemoryAmount(("20 Gigs"));
-
-        console = consoleRepo.save(console);
-
+        console2 = consoleRepo.save(console2);
         List<Console> consoleList = consoleRepo.findByManufacturer("Sony");
         assertEquals(consoleList.size(), 1);
     }
