@@ -47,12 +47,14 @@ public class InvoiceControllerTest {
     private Invoice outputInvoice2;
     private Invoice outputInvoice3;
     private Invoice outputInvoice4;
+    private Invoice inputInvoiceBadRequest;
 
-    String inputJson;
-    String outputJson;
-    String outputJson2;
-    String allInvoicesJSONFormat;
-    String allInvoicesJSONFormat2;
+    private String inputJson;
+    private String outputJson;
+    private String outputJson2;
+    private String allInvoicesJSONFormat;
+    private String allInvoicesJSONFormat2;
+    private String inputJsonBadRequest;
 
     @Before
     public void setUp() throws Exception {
@@ -78,8 +80,22 @@ public class InvoiceControllerTest {
                 4, "Uzi", "123 ST MAIN", "Dallas", "MT", 12345, "Game", 2,
                 7, 5.99F, 23.96F, 6.9F, 5.99F, 2121L
         );
+        inputInvoiceBadRequest = new Invoice();
+        inputInvoiceBadRequest.setStreet("123 ST MAIN");
+        inputInvoiceBadRequest.setCity("Dallas");
+        inputInvoiceBadRequest.setState("TX");
+        inputInvoiceBadRequest.setZipCode(12345);
+        inputInvoiceBadRequest.setItemType("Game Console");
+        inputInvoiceBadRequest.setTax(5.99F);
+        inputInvoiceBadRequest.setQuantity(4);
+        inputInvoiceBadRequest.setItemId(2);
+        inputInvoiceBadRequest.setProcessingFee(6.9F);
+        inputInvoiceBadRequest.setUnit_price(5.99F);
+        inputInvoiceBadRequest.setSubtotal(23.96F);
+        inputInvoiceBadRequest.setTotal(36L);
 
         inputJson = mapper.writeValueAsString(inputInvoice);
+        inputJsonBadRequest = mapper.writeValueAsString(inputInvoiceBadRequest);
         outputJson = mapper.writeValueAsString(outputInvoice);
         outputJson2 = mapper.writeValueAsString(outputInvoice2);
 
@@ -100,7 +116,26 @@ public class InvoiceControllerTest {
     //    POST ENDPOINTS
     @Test
     public void shouldReturnANewInvoiceInPostRequest() throws Exception {
+        Invoice invoiceTest = new Invoice();
+        invoiceTest.setId(1000);
+        invoiceTest.setName("Uz");
+        invoiceTest.setStreet("123 ST MAIN");
+        invoiceTest.setCity("Dallas");
+        invoiceTest.setState("TX");
+        invoiceTest.setZipCode(12345);
+        invoiceTest.setItemType("Game Console");
+        invoiceTest.setTax(5.99F);
+        invoiceTest.setQuantity(4);
+        invoiceTest.setItemId(1000);
+        invoiceTest.setProcessingFee(6.9F);
+        invoiceTest.setUnit_price(5.99F);
+        invoiceTest.setSubtotal(23.96F);
+        invoiceTest.setTotal(36L);
 
+        String inputJson = mapper.writeValueAsString(invoiceTest);
+        String outputJson = mapper.writeValueAsString(invoiceTest);
+
+        doReturn(invoiceTest).when(invoiceService).createNewInvoice(invoiceTest);
         // Arrange and Act
         mockMvc.perform(post("/invoice")
                         .content(inputJson)
@@ -121,7 +156,29 @@ public class InvoiceControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    @Test
+    public void shouldReturnA400StatusCodeOnUnSuccessfulPostRequest() throws Exception {
+
+        // Arrange and Act
+        mockMvc.perform(post("/invoice")
+                        .content(inputJsonBadRequest)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
     //    PUT ENDPOINTS
+    @Test
+    public void shouldReturn400HttpOnUnSuccessfulResponseOnPut() throws Exception {
+
+        // Arrange and Act
+        mockMvc.perform(put("/invoice")       // Act
+                        .content(inputJsonBadRequest)                     // Act
+                        .contentType(MediaType.APPLICATION_JSON)    // Act
+                ).andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
     @Test
     public void shouldGet204HttpResponseOnPut() throws Exception {
 

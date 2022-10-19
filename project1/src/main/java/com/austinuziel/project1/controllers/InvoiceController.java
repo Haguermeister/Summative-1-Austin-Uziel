@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,14 +27,14 @@ public class InvoiceController {
     //    POST REQUESTS
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Invoice createInvoice(@RequestBody Invoice newInvoice) {
+    public Invoice createInvoice(@RequestBody @Valid Invoice newInvoice) {
         return invoiceService.createNewInvoice(newInvoice);
     }
 
     //    PUT REQUESTS
     @PutMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void editInvoice(@RequestBody Invoice invoiceToEdit) {
+    public void editInvoice(@RequestBody @Valid Invoice invoiceToEdit) {
         invoiceService.editInvoice(invoiceToEdit);
     }
 
