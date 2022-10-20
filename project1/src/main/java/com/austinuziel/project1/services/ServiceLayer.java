@@ -2,10 +2,11 @@ package com.austinuziel.project1.services;
 
 import com.austinuziel.project1.models.*;
 import com.austinuziel.project1.repositories.*;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
@@ -14,38 +15,43 @@ public class ServiceLayer {
     private ConsoleRepo consoleRepo;
     private TShirtRepo tShirtRepo;
     private InvoiceRepo invoiceRepo;
-    private SalesTaxRateRepo salesTaxRateRepo
+    private SalesTaxRateRepo salesTaxRateRepo;
+    private ProcessingFeeRepo processingFeeRepo;
+
 
     @Autowired
-    public ServiceLayer(GameRepo gameRepo, ConsoleRepo consoleRepo, TShirtRepo tShirtRepo, InvoiceRepo invoiceRepo, SalesTaxRateRepo salesTaxRateRepo) {
+    public ServiceLayer(GameRepo gameRepo, ConsoleRepo consoleRepo, TShirtRepo tShirtRepo, InvoiceRepo invoiceRepo, SalesTaxRateRepo salesTaxRateRepo, ProcessingFeeRepo processingFeeRepo) {
         this.gameRepo = gameRepo;
         this.consoleRepo = consoleRepo;
         this.tShirtRepo = tShirtRepo;
         this.invoiceRepo = invoiceRepo;
         this.salesTaxRateRepo = salesTaxRateRepo;
+        this.processingFeeRepo = processingFeeRepo;
     }
 
-    private Map<Double,Integer> checkInventory(String gameType, Integer itemId) {
-        switch (gameType) {
+    private Pair<Double,Integer> checkInventory(String itemType, Integer itemId) { // return pair of price / quantity
+        switch (itemType) {
             case "Game":
                 Optional<Game> optionalGame = gameRepo.findById(itemId);
                 if (optionalGame.isPresent()) {
-                    Map<Double,Integer> returnMap = new HashMap<>(optionalGame.get().getPrice(),optionalGame.get().getQuantity()) ;
-
+                    Pair<Double,Integer> returnPair = new Pair<>(optionalGame.get().getPrice(),optionalGame.get().getQuantity()) ;
+                    return returnPair;
                 } else {
                     return null;
                 }
             case "TShirt":
                 Optional<TShirt> optionalTShirt = tShirtRepo.findById(itemId);
                 if (optionalTShirt.isPresent()) {
-                    return new HashMap<>(optionalTShirt.get().getPrice().intValue(),optionalTShirt.get().getQuantity()) ;
+                    Pair<Double,Integer> returnPair = new Pair<>(optionalTShirt.get().getPrice(),optionalTShirt.get().getQuantity()) ;
+                    return returnPair;
                 } else {
                     return null;
                 }
             case "Console":
                 Optional<Console> optionalConsole = consoleRepo.findById(itemId);
                 if (optionalConsole.isPresent()) {
-                    return new HashMap<>(optionalConsole.get().getPrice().intValue(),optionalConsole.get().getQuantity()) ;
+                    Pair<Double,Integer> returnPair = new Pair<>(optionalConsole.get().getPrice(),optionalConsole.get().getQuantity()) ;
+                    return returnPair;
                 } else {
                     return null;
                 }
@@ -53,20 +59,78 @@ public class ServiceLayer {
                 return null;
         }
     }
-
-    private Invoice buildInvoice(Invoice invoice) {
-        Optional<SalesTaxRate> optional = salesTaxRateRepo.findByState(invoice.getState());
-        if (invoice.getQuantity() > 0 && optional.isPresent()) {
-            Map checkI = checkInventory(invoice.getItemType(), invoice.getQuantity())
+    private void updateInventory(String itemType, Integer itemId, Integer invoiceQuantity){
+        switch (itemType) {
+            case "Game":
+                Optional<Game> optionalGame = gameRepo.findById(itemId);
+                if (optionalGame.isPresent()) {
+                    Integer currQuantity = optionalGame.get().getQuantity();
+                    currQuantity-=invoiceQuantity;
+                    optionalGame.get().setQuantity(currQuantity);
+                    gameRepo.save(optionalGame.get());
+                }
+                break;
+            case "TShirt":
+                Optional<TShirt> optionalTShirt = tShirtRepo.findById(itemId);
+                if (optionalTShirt.isPresent()) {
+                    Integer currQuantity = optionalTShirt.get().getQuantity();
+                    currQuantity-=invoiceQuantity;
+                    optionalTShirt.get().setQuantity(currQuantity);
+                    tShirtRepo.save(optionalTShirt.get());
+                }
+                break;
+            case "Console":
+                Optional<Console> optionalConsole = consoleRepo.findById(itemId);
+                if (optionalConsole.isPresent()) {
+                    Integer currQuantity = optionalConsole.get().getQuantity();
+                    currQuantity-=invoiceQuantity;
+                    optionalConsole.get().setQuantity(currQuantity);
+                    consoleRepo.save(optionalConsole.get());
+                }
+                break;
+            default: // Is not a Game Console or TShirt
+                break;
+        }
+    }
+    @Transactional
+    private Invoice buildInvoice(Invoice invoice) throws RuntimeException {
+        // declare needed additions to final invoice
+        Double total;
+        Double processingFee;
+        Double subtotal;
+        Double salesTax;
+        Double unitPrice;
+        Optional<SalesTaxRate> optionalSalesTaxRate = salesTaxRateRepo.findByState(invoice.getState());
+        Optional<ProcessingFee> optionalProcessingFee= processingFeeRepo.findByProductType(invoice.getItemType()); // do not need to check if present, that is done in checkInventory method
+        if (invoice.getQuantity() > 0 && optionalSalesTaxRate.isPresent()) {
+            Pair<Double,Integer> checkI = checkInventory(invoice.getItemType(), invoice.getQuantity());
             // check inventory
-            if (checkI. != null && checkI >= invoice.getQuantity()) {
+            if (checkI != null && checkI.getValue() >= invoice.getQuantity()) {
                 // Do calculations
-                Integer subtotal = invoice.getQuantity() *
+                updateInventory(invoice.getItemType(), invoice.getItemId(),invoice.getQuantity());
+                unitPrice = checkI.getKey();
+                 subtotal = invoice.getQuantity() * unitPrice;
+                 salesTax = subtotal*optionalSalesTaxRate.get().getRate();
+                if(invoice.getQuantity()>10){
+                    processingFee = optionalProcessingFee.get().getFee() + 15.49;
+                    total = subtotal + salesTax + processingFee;
+                }
+                else {
+                    processingFee = optionalProcessingFee.get().getFee();
+                    total = subtotal + salesTax + optionalProcessingFee.get().getFee();
+                }
+                invoice.setUnit_price(unitPrice);
+                invoice.setSubtotal(subtotal);
+                invoice.setTax(salesTax);
+                invoice.setProcessingFee(processingFee);
+                invoice.setTotal(total);
+                return invoiceRepo.save(invoice);
             } else {
                 throw new RuntimeException();
             }
-
         }
-        return null;
+        else {
+            throw new RuntimeException();
+        }
     }
 }

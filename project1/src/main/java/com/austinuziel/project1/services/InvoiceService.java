@@ -12,23 +12,19 @@ import java.util.Optional;
 public class InvoiceService {
 
     @Autowired
-    private final InvoiceRepo invoiceRepo;
-
-    public InvoiceService(InvoiceRepo invoiceRepo) {
-        this.invoiceRepo = invoiceRepo;
-    }
+    private ServiceLayer serviceLayer;
 
     //    CREATED METHODS
     public Invoice createNewInvoice(Invoice invoice) {
-        return invoiceRepo.save(invoice);
+        return serviceLayer.
     }
 
     //    UPDATED METHODS
-    public void editInvoice(Invoice invoiceToBeEdited) {
+//    public void editInvoice(Invoice invoiceToBeEdited) {
 //        finds within the database an invoice with that id and return it
-//        if not found throws a null object
-        invoiceRepo.save(invoiceToBeEdited);
-    }
+//       if not found throws a null object
+//        invoiceRepo.save(invoiceToBeEdited);
+//    }
 
     //    GET METHODS
     public List<Invoice> getAllInvoices() {
