@@ -1,9 +1,12 @@
 package com.austinuziel.project1.controllers;
+
 import com.austinuziel.project1.models.Game;
 import com.austinuziel.project1.repositories.GameRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +26,8 @@ public class GameController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Game getGameById(@PathVariable Integer id) {
-        Optional<Game> optional= repo.findById(id);
-        if(optional.isPresent()){
+        Optional<Game> optional = repo.findById(id);
+        if (optional.isPresent()) {
             return optional.get();
         }
         return null;
@@ -34,7 +37,7 @@ public class GameController {
     @ResponseStatus(HttpStatus.OK)
     public Game getGameByTitle(@PathVariable String title) {
         Optional<Game> optional = repo.findByTitle(title);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             return optional.get();
         }
         return null;
@@ -54,12 +57,17 @@ public class GameController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Game addGame(@RequestBody @Valid Game game) {return repo.save(game);}
+    public Game addGame(@RequestBody @Valid Game game) {
+        return repo.save(game);
+    }
 
     @PutMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateGame(@RequestBody @Valid Game game) {
-         repo.save(game);
+        if (!repo.findById(game.getGameId()).isPresent()) {
+            throw new EmptyResultDataAccessException("No T-Shirt with an id of " + game.getGameId() + " exists", 0);
+        }
+        repo.save(game);
     }
 
     @DeleteMapping("/{id}")

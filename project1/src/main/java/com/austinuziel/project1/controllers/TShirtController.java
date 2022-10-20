@@ -3,6 +3,7 @@ package com.austinuziel.project1.controllers;
 import com.austinuziel.project1.models.TShirt;
 import com.austinuziel.project1.repositories.TShirtRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,6 +56,9 @@ public class TShirtController {
     @PutMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateTShirt(@RequestBody @Valid TShirt tShirt) {
+        if (!repo.findById(tShirt.getTShirtId()).isPresent()) {
+            throw new EmptyResultDataAccessException("No T-Shirt with an id of " + tShirt.getTShirtId() + " exists", 0);
+        }
         repo.save(tShirt);
     }
 
