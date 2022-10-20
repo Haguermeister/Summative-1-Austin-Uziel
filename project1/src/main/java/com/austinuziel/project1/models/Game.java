@@ -31,7 +31,7 @@ public class Game extends SaleItem {
     public Game() {
     }
 
-    public Game(double price, Integer quantity, Integer gameId, String esrbRating, String title, String studio, String description) {
+    public Game(Double price, Integer quantity, Integer gameId, String esrbRating, String title, String studio, String description) {
         super(price, quantity);
         this.gameId = gameId;
         this.esrbRating = esrbRating;
