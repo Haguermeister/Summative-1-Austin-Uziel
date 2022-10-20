@@ -1,5 +1,6 @@
 package com.austinuziel.project1.controllers;
 import com.austinuziel.project1.models.CustomErrorResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +62,16 @@ public class ControllerExceptionHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity<CustomErrorResponse> nullException(EmptyResultDataAccessException e) {
         CustomErrorResponse error = new CustomErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
+        error.setStatus((HttpStatus.UNPROCESSABLE_ENTITY.value()));
+        error.setTimestamp(LocalDateTime.now());
+        ResponseEntity<CustomErrorResponse> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
+        return responseEntity;
+    }
+
+    @ExceptionHandler(value = DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<CustomErrorResponse> dataIntegrityViolationException(DataIntegrityViolationException e) {
+        CustomErrorResponse error = new CustomErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY, e.getMostSpecificCause().toString() );
         error.setStatus((HttpStatus.UNPROCESSABLE_ENTITY.value()));
         error.setTimestamp(LocalDateTime.now());
         ResponseEntity<CustomErrorResponse> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);

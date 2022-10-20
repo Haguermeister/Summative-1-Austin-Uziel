@@ -14,18 +14,11 @@ public class InvoiceTest {
     public void setUp() {
         inputInvoice = new Invoice(
                 1, "Uziel", "123 ST MAIN", "Dallas", "TX", 12345, "Game Console", 1,
-                4, 5.99F, 23.96F, 6.9F, 5.99F, 3682L
+                4, 5.99, 23.96, 6.9, 5.99, 364.0
         );
 
         outputInvoice = new Invoice();
-    }
-
-    @Test
-    public void shouldCreateACompleteInvoice() {
-//        Arrange
-
-
-//        ACT
+        //        ACT
         outputInvoice.setId(1);
         outputInvoice.setName("Uziel");
         outputInvoice.setStreet("123 ST MAIN");
@@ -35,13 +28,17 @@ public class InvoiceTest {
         outputInvoice.setItemType("Game Console");
         outputInvoice.setItemId(1);
         outputInvoice.setQuantity(4);
-        outputInvoice.setUnit_price(5.99F);
-        outputInvoice.setSubtotal(23.96F);
-        outputInvoice.setTax(6.9F);
-        outputInvoice.setProcessingFee(5.99F);
-        outputInvoice.setTotal(3682L);
+        outputInvoice.setUnit_price(5.99);
+        outputInvoice.setSubtotal(23.96);
+        outputInvoice.setTax(6.9);
+        outputInvoice.setProcessingFee(5.99);
+        outputInvoice.setTotal(364.0);
+    }
 
-//        ASSERT
+    @Test
+    public void shouldCreateACompleteInvoice() {
+
+//       ASSERT
 
         assertEquals(inputInvoice, outputInvoice);
     }
