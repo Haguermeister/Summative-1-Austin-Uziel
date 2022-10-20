@@ -1,7 +1,8 @@
 package com.austinuziel.project1.controllers;
 
 import com.austinuziel.project1.models.Invoice;
-import com.austinuziel.project1.services.InvoiceService;
+import com.austinuziel.project1.repositories.InvoiceRepo;
+import com.austinuziel.project1.services.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,56 +18,38 @@ public class InvoiceController {
 
     //    SERVICES
     @Autowired
-    private final InvoiceService invoiceService;
-
-    public InvoiceController(InvoiceService invoiceService) {
-        this.invoiceService = invoiceService;
-    }
-
+    private ServiceLayer serviceLayer;
+    private InvoiceRepo repo;
 
     //    POST REQUESTS
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Invoice createInvoice(@RequestBody @Valid Invoice newInvoice) {
-        return invoiceService.createNewInvoice(newInvoice);
+        return serviceLayer.buildInvoice(newInvoice);
     }
 
-    //    PUT REQUESTS
-    @PutMapping()
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void editInvoice(@RequestBody @Valid Invoice invoiceToEdit) {
-        invoiceService.editInvoice(invoiceToEdit);
-    }
-
-//    GET REQUESTS
-
-
+    //    GET REQUESTS
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<Invoice> getAllInvoices() {
-        return invoiceService.getAllInvoices();
+        return repo.findAll();
     }
-
 
     @GetMapping("/getById/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Invoice> getInvoiceById(@PathVariable Integer id) {
-        return invoiceService.getInvoiceById(id);
+    public Invoice getInvoiceById(@PathVariable Integer id) {
+        Optional<Invoice> optional = repo.findById(id);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        return null;
     }
 
-    @GetMapping("/getByName/{name}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Invoice> getInvoiceById(@PathVariable String name) {
-        return invoiceService.getInvoiceByName(name);
-    }
-
-
-//    DELETE REQUESTS
-
+    //    DELETE REQUESTS
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteInvoice(@PathVariable Integer id) {
-        invoiceService.deleteInvoiceById(id);
+        repo.deleteById(id);
     }
 
 }
