@@ -1,9 +1,12 @@
 package com.austinuziel.project1.controllers;
+
 import com.austinuziel.project1.models.Console;
 import com.austinuziel.project1.repositories.ConsoleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -13,15 +16,18 @@ import java.util.Optional;
 public class ConsoleController {
     @Autowired
     ConsoleRepo repo;
+
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<Console> getGameConsoles() {return repo.findAll();}
+    public List<Console> getGameConsoles() {
+        return repo.findAll();
+    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Console getGameConsoleById(@PathVariable Integer id) {
         Optional<Console> optional = repo.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             return optional.get();
         }
         return null;
@@ -42,6 +48,9 @@ public class ConsoleController {
     @PutMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateGameConsole(@RequestBody @Valid Console console) {
+        if (!repo.findById(console.getConsoleId()).isPresent()) {
+            throw new EmptyResultDataAccessException("No T-Shirt with an id of " + console.getConsoleId() + " exists", 0);
+        }
         repo.save(console);
     }
 
