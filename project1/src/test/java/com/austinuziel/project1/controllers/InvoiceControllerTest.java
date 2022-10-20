@@ -1,7 +1,7 @@
 package com.austinuziel.project1.controllers;
 
 import com.austinuziel.project1.models.Invoice;
-import com.austinuziel.project1.services.InvoiceService;
+import com.austinuziel.project1.services.ServiceLayer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class InvoiceControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private InvoiceService invoiceService;
+    private ServiceLayer serviceLayer;
 
     private ObjectMapper mapper = new ObjectMapper();
 

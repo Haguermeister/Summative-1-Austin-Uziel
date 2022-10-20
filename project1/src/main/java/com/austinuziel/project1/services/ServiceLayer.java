@@ -93,7 +93,7 @@ public class ServiceLayer {
         }
     }
     @Transactional
-    private Invoice buildInvoice(Invoice invoice) throws RuntimeException {
+    public Invoice buildInvoice(Invoice invoice) throws RuntimeException {
         // declare needed additions to final invoice
         Double total;
         Double processingFee;
