@@ -36,23 +36,23 @@ public class Invoice {
     @NotNull(message = "You must supply an Integer for quantity")
     private Integer quantity;
     @NotNull(message = "You must supply a float for unit_price")
-    private Float unit_price;
+    private Double unit_price;
     @NotNull(message = "You must supply a float for subtotal")
-    private Float subtotal;
+    private Double subtotal;
     @NotNull(message = "You must supply a float for tax")
-    private Float tax;
+    private Double tax;
     @Column(name = "processing_fee")
     @NotNull(message = "You must supply a float for processingFee")
-    private Float processingFee;
+    private Double processingFee;
     @NotNull(message = "You must supply a long for total")
-    private Long total;
+    private Double total;
 
     //    CONSTRUCTORS
 
     public Invoice() {
     }
 
-    public Invoice(String name, String street, String city, String state, Integer zipCode, String itemType, Integer itemId, Integer quantity, Float unit_price, Float subtotal, Float tax, Float processingFee, Long total) {
+    public Invoice(String name, String street, String city, String state, Integer zipCode, String itemType, Integer itemId, Integer quantity, Double unit_price, Double subtotal, Double tax, Double processingFee, Double total) {
         this.name = name;
         this.street = street;
         this.city = city;
@@ -68,7 +68,7 @@ public class Invoice {
         this.total = total;
     }
 
-    public Invoice(Integer id, String name, String street, String city, String state, Integer zipCode, String itemType, Integer itemId, Integer quantity, Float unit_price, Float subtotal, Float tax, Float processingFee, Long total) {
+    public Invoice(Integer id, String name, String street, String city, String state, Integer zipCode, String itemType, Integer itemId, Integer quantity, Double unit_price, Double subtotal, Double tax, Double processingFee, Double total) {
         this.id = id;
         this.name = name;
         this.street = street;
@@ -157,43 +157,43 @@ public class Invoice {
         this.quantity = quantity;
     }
 
-    public Float getUnit_price() {
+    public Double getUnit_price() {
         return unit_price;
     }
 
-    public void setUnit_price(Float unit_price) {
+    public void setUnit_price(Double unit_price) {
         this.unit_price = unit_price;
     }
 
-    public Float getSubtotal() {
+    public Double getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(Float subtotal) {
+    public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
     }
 
-    public Float getTax() {
+    public Double getTax() {
         return tax;
     }
 
-    public void setTax(Float tax) {
+    public void setTax(Double tax) {
         this.tax = tax;
     }
 
-    public Float getProcessingFee() {
+    public Double getProcessingFee() {
         return processingFee;
     }
 
-    public void setProcessingFee(Float processingFee) {
+    public void setProcessingFee(Double processingFee) {
         this.processingFee = processingFee;
     }
 
-    public Long getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(Long total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 
