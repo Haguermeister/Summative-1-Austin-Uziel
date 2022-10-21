@@ -65,7 +65,7 @@ public class GameController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateGame(@RequestBody @Valid Game game) {
         if (!repo.findById(game.getGameId()).isPresent()) {
-            throw new EmptyResultDataAccessException("No T-Shirt with an id of " + game.getGameId() + " exists", 0);
+            throw new EmptyResultDataAccessException("No Game with an id of " + game.getGameId() + " exists", 0);
         }
         repo.save(game);
     }

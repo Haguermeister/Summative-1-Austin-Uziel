@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
 
-public class InvoiceTest {
+public class InvoiceControllerTest {
 
     Invoice inputInvoice;
     Invoice outputInvoice;
