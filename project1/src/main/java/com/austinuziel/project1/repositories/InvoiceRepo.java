@@ -8,8 +8,5 @@ import java.util.List;
 
 @Repository
 public interface InvoiceRepo extends JpaRepository<Invoice, Integer> {
-
     List<Invoice> findByName(String name);
-
-
 }

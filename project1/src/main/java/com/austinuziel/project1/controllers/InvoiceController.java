@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,16 +14,15 @@ import java.util.Optional;
 @RequestMapping("/invoice")
 public class InvoiceController {
 
-
-    //    SERVICES
     @Autowired
     private ServiceLayer serviceLayer;
-    private InvoiceRepo repo;
+    @Autowired
+    private InvoiceRepo invoiceRepo;
 
     //    POST REQUESTS
-    @PostMapping
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Invoice createInvoice(@RequestBody @Valid Invoice newInvoice) {
+    public Invoice createInvoice(@RequestBody Invoice newInvoice) {
         return serviceLayer.buildInvoice(newInvoice);
     }
 
@@ -32,13 +30,13 @@ public class InvoiceController {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<Invoice> getAllInvoices() {
-        return repo.findAll();
+        return invoiceRepo.findAll();
     }
 
-    @GetMapping("/getById/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Invoice getInvoiceById(@PathVariable Integer id) {
-        Optional<Invoice> optional = repo.findById(id);
+        Optional<Invoice> optional = invoiceRepo.findById(id);
         if(optional.isPresent()){
             return optional.get();
         }
@@ -49,7 +47,7 @@ public class InvoiceController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteInvoice(@PathVariable Integer id) {
-        repo.deleteById(id);
+        invoiceRepo.deleteById(id);
     }
 
 }

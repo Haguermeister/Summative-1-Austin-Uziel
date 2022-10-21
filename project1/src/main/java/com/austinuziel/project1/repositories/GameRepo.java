@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-
 @Repository
 public interface GameRepo extends JpaRepository<Game, Integer> {
     List<Game> findByEsrbRating(String esrbRating);

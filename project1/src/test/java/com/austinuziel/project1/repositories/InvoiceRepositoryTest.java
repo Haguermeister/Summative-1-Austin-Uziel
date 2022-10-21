@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,12 +35,12 @@ public class InvoiceRepositoryTest {
         invoice.setStreet("123 ST MAIN");
         invoice.setCity("Dallas");
         invoice.setState("TX");
-        invoice.setZipCode(12345);
+        invoice.setZipcode("12345");
         invoice.setItemType("Game Console");
-        invoice.setTax(5.99);
+        invoice.setTax(new BigDecimal("5.99"));
         invoice.setQuantity(4);
         invoice.setProcessingFee(6.9);
-        invoice.setUnit_price(5.99);
+        invoice.setUnitPrice(5.99);
         invoice.setSubtotal(23.96);
         invoice.setTotal(361.00);
         invoice.setItemId(1);
@@ -50,12 +51,12 @@ public class InvoiceRepositoryTest {
         invoice2.setStreet("123 ST Not Main");
         invoice2.setCity("Puebla");
         invoice2.setState("PB");
-        invoice2.setZipCode(12345);
+        invoice2.setZipcode("12345");
         invoice2.setItemType("Game");
-        invoice2.setTax(5.99);
+        invoice2.setTax(new BigDecimal("5.99"));
         invoice2.setQuantity(4);
         invoice2.setProcessingFee(6.9);
-        invoice2.setUnit_price(5.99);
+        invoice2.setUnitPrice(5.99);
         invoice2.setSubtotal(23.96);
         invoice2.setTotal(361.00);
         invoice2.setItemId(1);
@@ -67,15 +68,15 @@ public class InvoiceRepositoryTest {
 //        ACT
         invoice = invoiceRepo.save(invoice);
 
-        Optional<Invoice> invoice1 = invoiceRepo.findById(invoice.getId());
+        Optional<Invoice> invoice1 = invoiceRepo.findById(invoice.getInvoiceId());
 
 
 //        ASSERT
         assertEquals(invoice1.get(), invoice);
 
-        invoiceRepo.deleteById(invoice.getId());
+        invoiceRepo.deleteById(invoice.getInvoiceId());
 
-        invoice1 = invoiceRepo.findById(invoice.getId());
+        invoice1 = invoiceRepo.findById(invoice.getInvoiceId());
         assertFalse(invoice1.isPresent());
 
     }
@@ -96,7 +97,7 @@ public class InvoiceRepositoryTest {
     @Test
     public void getInvoiceById() {
         Invoice outpuInvoice = invoiceRepo.save(invoice);
-        Optional<Invoice> getInvoiceById = invoiceRepo.findById(outpuInvoice.getId());
+        Optional<Invoice> getInvoiceById = invoiceRepo.findById(outpuInvoice.getInvoiceId());
         assertEquals(Optional.of(invoice), getInvoiceById);
     }
 
