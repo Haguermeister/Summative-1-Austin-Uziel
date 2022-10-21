@@ -140,14 +140,29 @@ public class ConsoleControllerTest {
     @Test
     public void shouldUpdateGameConsole() throws Exception {
         // Arrange and Act
-        Console inputConsole2 = new Console();
+        inputConsole2 = new Console();
         inputConsole2.setPrice(250.99);
         inputConsole2.setQuantity(200);
-        inputConsole2.setMemoryAmount("1 Gigabytes");
-        inputConsole2.setProcessor("I1");
+        inputConsole2.setMemoryAmount("2 Gigabytes");
+        inputConsole2.setProcessor("I2");
         inputConsole2.setModel("XBOX");
         inputConsole2.setManufacturer("Microsoft");
         inputConsole2.setConsoleId(2);
+        inputGameConsole2JSON = mapper.writeValueAsString(inputConsole2);
+
+        outputConsole2 = new Console();
+        outputConsole2.setPrice(250.99);
+        outputConsole2.setQuantity(200);
+        outputConsole2.setMemoryAmount("2 Gigabytes");
+        outputConsole2.setProcessor("I2");
+        outputConsole2.setModel("XBOX");
+        outputConsole2.setManufacturer("Microsoft");
+        outputConsole2.setConsoleId(2);
+
+        Optional<Console> optional = Optional.of(outputConsole2);
+        doReturn(optional).when(consoleRepo).findById(2);
+        doReturn(outputConsole2).when(consoleRepo).save(inputConsole2);
+
         mockMvc.perform(put("/gameConsole")
                         .content(inputGameConsole2JSON)
                         .contentType(MediaType.APPLICATION_JSON))
