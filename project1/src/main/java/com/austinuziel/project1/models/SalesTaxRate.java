@@ -2,9 +2,7 @@ package com.austinuziel.project1.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -14,7 +12,6 @@ import java.util.Objects;
 public class SalesTaxRate {
 
     @Id
-    private Integer id;
     @NotNull(message = "You must supply a String for state")
     private String state;
     @NotNull(message = "You must double a String for rate")

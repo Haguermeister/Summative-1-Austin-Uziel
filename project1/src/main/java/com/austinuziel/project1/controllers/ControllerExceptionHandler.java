@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestControllerAdvice
+//@RestControllerAdvice
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(value = NullPointerException.class)
