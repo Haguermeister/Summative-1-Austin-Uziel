@@ -49,7 +49,7 @@ public class ConsoleController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateGameConsole(@RequestBody @Valid Console console) {
         if (!repo.findById(console.getConsoleId()).isPresent()) {
-            throw new EmptyResultDataAccessException("No T-Shirt with an id of " + console.getConsoleId() + " exists", 0);
+            throw new EmptyResultDataAccessException("No Console with an id of " + console.getConsoleId() + " exists", 0);
         }
         repo.save(console);
     }
