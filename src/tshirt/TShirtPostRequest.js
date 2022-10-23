@@ -10,17 +10,16 @@ export const TShirtPostRequest = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            axios.post("http://localhost:8080/tshirt", {
-                price: price,
-                quantity: quantity,
-                size: size,
-                color: color,
-                description: description
-            }).then(res => console.log(res));
-        } catch (err) {
-            console.log(err);
-        }
+        axios.post("http://localhost:8080/tshirt", {
+            price: price,
+            quantity: quantity,
+            size: size,
+            color: color,
+            description: description
+        }).then(res => {
+            alert("Response Status Code: " + res.status);
+            window.location.reload();
+        }).catch(e => alert(e + e.response));
     };
 
     return (
@@ -48,10 +47,10 @@ export const TShirtPostRequest = () => {
                     onChange={(e) => setColor(e.target.value)}
                 />
                 <input
-                type="text"
-                placeholder="description"
-                onChange={(e) => setDescription(e.target.value)}
-            />
+                    type="text"
+                    placeholder="description"
+                    onChange={(e) => setDescription(e.target.value)}
+                />
                 <button type="submit">Submit</button>
             </form>
         </div>

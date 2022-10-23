@@ -11,18 +11,17 @@ export const GamesPostRequest = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            axios.post("http://localhost:8080/game", {
-                price: price,
-                quantity: quantity,
-                description: description,
-                esrbRating: esrbRating,
-                title: title,
-                studio: studio
-            }).then(res => console.log(res));
-        } catch (err) {
-            console.log(err);
-        }
+        axios.post("http://localhost:8080/game", {
+            price: price,
+            quantity: quantity,
+            description: description,
+            esrbRating: esrbRating,
+            title: title,
+            studio: studio
+        }).then(res => {
+            alert("Response Status Code: " + res.status);
+            window.location.reload();
+        }).catch(e => alert(e + e.response));
     };
 
     return (

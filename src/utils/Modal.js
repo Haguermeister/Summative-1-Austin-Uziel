@@ -26,13 +26,14 @@ justify-content: space-between;
 `;
 
 
+// Modal from: https://www.linkedin.com/learning/react-design-patterns/take-your-react-skills-to-the-next-level?autoplay=true
 function Modal(obj, game, tShirt) {
     const [shouldShow, setShouldShow] = useState(false);
     const [consolesData, setconsolesData] = useState(null);
     const [gamesData, setGamesData] = useState(null);
     const [tShirtData, setTshirtData] = useState(null);
 
-
+    //set initial state
     const [state, setState] = useState({
         price: null,
         quantity: null,
@@ -50,7 +51,7 @@ function Modal(obj, game, tShirt) {
 
     })
 
-    //checks what type of data the modal receives
+    //checks what type of data (product) the modal receives
     useEffect(() => {
         if (obj.obj !== null) {
             setconsolesData(obj)
@@ -136,6 +137,7 @@ function Modal(obj, game, tShirt) {
         )
     }
 
+    //on change of value, set those values to initial form state
     const handleChanges = (e) => {
         e.preventDefault()
         const value = e.target.value;
@@ -146,8 +148,10 @@ function Modal(obj, game, tShirt) {
     };
 
     const makePutRequest = () => {
+        //put request for game conslles
         if (consolesData !== null) {
             axios.put('http://localhost:8080/gameConsole', {
+                //if values where not edited, it conserves the past values
                 price: state.price !== null ? state.price : consolesData.obj.price,
                 quantity: state.quantity !== null ? state.quantity : consolesData.obj.quantity,
                 consoleId: consolesData.obj.id,
@@ -155,10 +159,15 @@ function Modal(obj, game, tShirt) {
                 processor: state.processor !== null ? state.processor : consolesData.obj.processor,
                 model: state.model !== null ? state.model : consolesData.obj.model,
                 manufacturer: state.manufacturer !== null ? state.manufacturer : consolesData.obj.manufacturer
-            })
+            }).then(res => {
+                alert("Response Status Code: " + res.status);
+                window.location.reload();
+            }).catch(e => alert(e + e.response));
         }
+        //put request for games
         if (gamesData !== null) {
             axios.put('http://localhost:8080/game', {
+                //if values where not edited, it conserves the past values
                 price: state.price !== null ? state.price : gamesData.game.price,
                 quantity: state.quantity !== null ? state.quantity : gamesData.game.quantity,
                 gameId: gamesData.game.id,
@@ -166,17 +175,25 @@ function Modal(obj, game, tShirt) {
                 title: state.title !== null ? state.title : gamesData.game.title,
                 studio: state.studio !== null ? state.studio : gamesData.game.studio,
                 description: state.description !== null ? state.description : gamesData.game.description
-            })
+            }).then(res => {
+                alert("Response Status Code: " + res.status);
+                window.location.reload();
+            }).catch(e => alert(e + e.response));
         }
+        //put request for t-shirts
         if (tShirtData !== null) {
             axios.put('http://localhost:8080/tshirt', {
+                //if values where not edited, it conserves the past values
                 price: state.price !== null ? state.price : tShirtData.tShirt.price,
                 quantity: state.quantity !== null ? state.quantity : tShirtData.tShirt.quantity,
                 size: state.size !== null ? state.size : tShirtData.tShirt.size,
                 color: state.color !== null ? state.color : tShirtData.tShirt.color,
                 description: state.description !== null ? state.description : tShirtData.tShirt.description,
                 tshirtId: tShirtData.tShirt.id
-            })
+            }).then(res => {
+                alert("Response Status Code: " + res.status);
+                window.location.reload();
+            }).catch(e => alert(e + e.response));
 
             window.location.reload();
 
@@ -193,6 +210,8 @@ function Modal(obj, game, tShirt) {
             {shouldShow && (
                 <ModalBackground>
                     <ModalBody onClick={(e) => e.stopPropagation()}>
+                        <p>Editing Mode</p>
+                        {/*depending on what type of product the user is editing, display the form to that product*/}
                         {consolesData && editingGameConsolesModal()}
                         {gamesData && editingGamesModal()}
                         {tShirtData && editingTShirtsModal()}
