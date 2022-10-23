@@ -12,18 +12,17 @@ export const GameConsolesPostRequestForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            axios.post("http://localhost:8080/gameConsole", {
-                price: price,
-                quantity: quantity,
-                memoryAmount: memoryAmount,
-                processor: processor,
-                model: model,
-                manufacturer: manufacturer
-            }).then(res => console.log(res));
-        } catch (err) {
-            console.log(err);
-        }
+        axios.post("http://localhost:8080/gameConsole", {
+            price: price,
+            quantity: quantity,
+            memoryAmount: memoryAmount,
+            processor: processor,
+            model: model,
+            manufacturer: manufacturer
+        }).then(res => {
+            alert("Response Status Code: " + res.status);
+            window.location.reload();
+        }).catch(e => alert(e + e.response));
     };
 
     return (

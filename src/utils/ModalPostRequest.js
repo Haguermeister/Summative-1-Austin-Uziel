@@ -4,7 +4,6 @@ import {TShirtPostRequest} from "../tshirt/TShirtPostRequest";
 import {GamesPostRequest} from "../games/GamesPostRequest";
 import {GameConsolesPostRequestForm} from "../gameConsoles/GameConsolesPostRequestForm";
 
-// Modal from: https://www.linkedin.com/learning/react-design-patterns/take-your-react-skills-to-the-next-level?autoplay=true
 
 const ModalBackground = styled.div`
 position: fixed;
@@ -25,9 +24,11 @@ width: 90%;
 height: auto;
 display: flex;
 flex-direction: column;
-justify-content: space-between;
+justify-content: center;
+align-items: center;
 `;
 
+// Modal from: https://www.linkedin.com/learning/react-design-patterns/take-your-react-skills-to-the-next-level?autoplay=true
 
 function ModalPostRequest(productPostRequest, showTShirtPostRequestForm, showGamesPostRequestForm, showGameConsolesPostRequestForm) {
     const [shouldShow, setShouldShow] = useState(false);
@@ -37,13 +38,19 @@ function ModalPostRequest(productPostRequest, showTShirtPostRequestForm, showGam
             <div className="flex justify-center">
 
                 <button onClick={() => setShouldShow(true)}>
-                    create
+
+                    {productPostRequest.showTShirtPostRequestForm === true ? "Add New T-Shirt" : ""}
+
+                    {productPostRequest.showGamesPostRequestForm === true ? "Add New Game" : ""}
+
+                    {productPostRequest.showGameConsolesPostRequestForm === true ? "Add New Game Console" : ""}
                 </button>
             </div>
             {shouldShow && (
                 <ModalBackground>
                     <ModalBody onClick={(e) => e.stopPropagation()}>
 
+                        {/*based on what type of product the user wants to create, it will show that form for that product*/}
                         {productPostRequest.showTShirtPostRequestForm === true ? <TShirtPostRequest/> : ""}
 
                         {productPostRequest.showGamesPostRequestForm === true ? <GamesPostRequest/> : ""}
@@ -51,7 +58,7 @@ function ModalPostRequest(productPostRequest, showTShirtPostRequestForm, showGam
                         {productPostRequest.showGameConsolesPostRequestForm === true ? <GameConsolesPostRequestForm/> : ""}
 
                         <div>
-                            <button className="close-modal-btn"
+                            <button style={{width: 50}} className="close-modal-btn"
                                     onClick={() => setShouldShow(false)}>
                                 Close
                             </button>
